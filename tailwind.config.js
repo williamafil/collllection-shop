@@ -16,6 +16,9 @@ module.exports = {
       fontFamily: {
         arsenal: "'Arsenal', 'sans-serif'",
       },
+      fontSize: {
+        "2xs": ".50rem",
+      },
     },
   },
   variants: {
