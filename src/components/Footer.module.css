@@ -1,0 +1,3 @@
+.footer__link_item {
+  @apply pb-1 text-dark hover:border-b hover:border-dark;
+}
