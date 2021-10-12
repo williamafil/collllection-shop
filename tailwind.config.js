@@ -18,6 +18,7 @@ module.exports = {
         },
         dark: "#162317",
         lightTeal: "#9ab1ac",
+        googleBlue: "#4285f4",
       },
       fontFamily: {
         arsenal: "'Arsenal', 'sans-serif'",
