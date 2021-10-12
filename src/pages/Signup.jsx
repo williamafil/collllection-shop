@@ -10,19 +10,34 @@ const Signup = () => {
         <form>
           <fieldset className="mt-5 lg:mt-0">
             <FormLabel label="First Name" />
-            <FormInput id="first-name" type="text" placeholder="First Name" />
+            <FormInput
+              id="first-name"
+              type="text"
+              placeholder="First Name"
+              required
+            />
           </fieldset>
           <fieldset className="mt-5">
             <FormLabel label="Last Name" />
-            <FormInput id="last-name" type="text" placeholder="Last Name" />
+            <FormInput
+              id="last-name"
+              type="text"
+              placeholder="Last Name"
+              required
+            />
           </fieldset>
           <fieldset className="mt-5 lg:mt-0">
             <FormLabel label="Email" />
-            <FormInput id="email" type="email" placeholder="Email" />
+            <FormInput id="email" type="email" placeholder="Email" required />
           </fieldset>
           <fieldset className="mt-5">
             <FormLabel label="Password" />
-            <FormInput id="password" type="password" placeholder="Password" />
+            <FormInput
+              id="password"
+              type="password"
+              placeholder="Password"
+              required
+            />
           </fieldset>
           <fieldset className="mt-5">
             <FormButton value="Create" />
