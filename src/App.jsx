@@ -24,12 +24,12 @@ function App() {
           await onSnapshot(userDoc, (snapshot) => {
             const id = snapshot.id;
             const userProfile = { ...snapshot.data() };
-            const createdAt = snapshot.data().createdAt.toDate();
+            // const createdAt = snapshot.data().createdAt.toDate();
 
             setUser({
               ...userProfile,
               id,
-              createdAt,
+              // createdAt,
             });
           });
         }

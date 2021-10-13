@@ -31,7 +31,7 @@ export const signInWithGoogle = () => signInWithPopup(auth, provider);
 
 export const db = getFirestore();
 
-export const createUserProfileDoc = async (authUser) => {
+export const createUserProfileDoc = async (authUser, detailedProfile) => {
   if (!authUser) return;
 
   // Check if userDoc existed in db
@@ -49,6 +49,7 @@ export const createUserProfileDoc = async (authUser) => {
         email,
         photoURL,
         createdAt: serverTimestamp(),
+        ...detailedProfile,
       });
     } catch (error) {
       console.error("ERROR MESSAGE: ", error);
