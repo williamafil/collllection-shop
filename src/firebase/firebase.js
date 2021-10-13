@@ -1,5 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -21,5 +28,34 @@ provider.setCustomParameters({
 });
 
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
+
+export const db = getFirestore();
+
+export const createUserProfileDoc = async (authUser) => {
+  if (!authUser) return;
+
+  // Check if userDoc existed in db
+  const userDoc = await doc(db, "users", authUser.uid);
+  const userSnapshot = await getDoc(userDoc);
+  const isUserExist = userSnapshot.exists();
+
+  // if not exist, create user in db
+  if (!isUserExist) {
+    const { displayName, email, photoURL } = authUser;
+
+    try {
+      await setDoc(userDoc, {
+        displayName,
+        email,
+        photoURL,
+        createdAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error("ERROR MESSAGE: ", error);
+    }
+  }
+
+  return userDoc;
+};
 
 export default app;
