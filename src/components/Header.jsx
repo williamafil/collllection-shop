@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase/firebase";
 import { ReactComponent as BagIcon } from "../images/bag.svg";
 import style from "./Header.module.css";
 
-const Header = () => {
+const Header = ({ user }) => {
   return (
     <header className="container mx-auto py-10 px-5">
       <nav className="w-full flex justify-between items-center">
@@ -51,13 +52,23 @@ const Header = () => {
             <div className="hidden lg:block w-full pr-8">
               <ul className="h-full flex justify-end items-center space-x-8">
                 <li>
-                  <Link
-                    to="/login"
-                    className={style.header__link_item}
-                    href="#"
-                  >
-                    Log In
-                  </Link>
+                  {user ? (
+                    <span
+                      onClick={() => auth.signOut()}
+                      href="#"
+                      className={style.header__link_item}
+                    >
+                      Log Out
+                    </span>
+                  ) : (
+                    <Link
+                      to="/login"
+                      className={style.header__link_item}
+                      href="#"
+                    >
+                      Log In
+                    </Link>
+                  )}
                 </li>
                 <li>
                   <a className={style.header__link_item} href="#">
