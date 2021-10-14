@@ -4,6 +4,9 @@ import { auth, createUserProfileDoc } from "./firebase/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
 import { onSnapshot } from "@firebase/firestore";
 
+import { useDispatch } from "react-redux";
+import { userActions } from "./store/user-slice";
+
 import Alert from "./components/Alert";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -12,6 +15,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 function App() {
+  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -21,21 +25,30 @@ function App() {
         // authorized user
         if (authUserResponse) {
           const userDoc = await createUserProfileDoc(authUserResponse);
-          await onSnapshot(userDoc, (snapshot) => {
+          const userSnapshot = await onSnapshot(userDoc, (snapshot) => {
             const id = snapshot.id;
             const userProfile = { ...snapshot.data() };
-            // const createdAt = snapshot.data().createdAt.toDate();
+            const createdAt = snapshot.data().createdAt.toDate();
 
-            setUser({
-              ...userProfile,
-              id,
-              // createdAt,
-            });
+            dispatch(
+              userActions.setCurrentUser({
+                ...userProfile,
+                id,
+                createdAt,
+              }),
+            );
+
+            // setUser({
+            //   ...userProfile,
+            //   id,
+            //   // createdAt,
+            // });
           });
         }
 
         // unauthorized user (authUserResponse is null)
-        setUser(authUserResponse);
+        // setUser(authUserResponse);
+        dispatch(userActions.setCurrentUser(authUserResponse));
 
         return () => unsubscribeOnAuthState();
       },
@@ -45,7 +58,8 @@ function App() {
   return (
     <>
       <Alert />
-      <Header user={user} />
+      {/* <Header user={user} /> */}
+      <Header />
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />

@@ -1,10 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebase";
 import { ReactComponent as BagIcon } from "../images/bag.svg";
 import style from "./Header.module.css";
 
-const Header = ({ user }) => {
+const Header = () => {
+  const currentUser = useSelector((state) => state.user.currentUser);
+
   return (
     <header className="container mx-auto py-10 px-5">
       <nav className="w-full flex justify-between items-center">
@@ -51,16 +54,22 @@ const Header = ({ user }) => {
           <div className="h-ful flex justify-end">
             <div className="hidden lg:block w-full pr-8">
               <ul className="h-full flex justify-end items-center space-x-8">
-                <li>
-                  {user ? (
-                    <span
-                      onClick={() => auth.signOut()}
-                      href="#"
-                      className={style.header__link_item}
-                    >
-                      Log Out
-                    </span>
-                  ) : (
+                {currentUser ? (
+                  <>
+                    <li>
+                      <span
+                        onClick={() => auth.signOut()}
+                        className={style.header__link_item}
+                      >
+                        Log Out
+                      </span>
+                    </li>
+                    <li>
+                      <span className={style.header__link_item}>Account</span>
+                    </li>
+                  </>
+                ) : (
+                  <li>
                     <Link
                       to="/login"
                       className={style.header__link_item}
@@ -68,8 +77,9 @@ const Header = ({ user }) => {
                     >
                       Log In
                     </Link>
-                  )}
-                </li>
+                  </li>
+                )}
+
                 <li>
                   <a className={style.header__link_item} href="#">
                     Search
