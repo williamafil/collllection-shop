@@ -28,26 +28,17 @@ function App() {
           const userSnapshot = await onSnapshot(userDoc, (snapshot) => {
             const id = snapshot.id;
             const userProfile = { ...snapshot.data() };
-            const createdAt = snapshot.data().createdAt.toDate();
 
             dispatch(
               userActions.setCurrentUser({
                 ...userProfile,
                 id,
-                createdAt,
               }),
             );
-
-            // setUser({
-            //   ...userProfile,
-            //   id,
-            //   // createdAt,
-            // });
           });
         }
 
         // unauthorized user (authUserResponse is null)
-        // setUser(authUserResponse);
         dispatch(userActions.setCurrentUser(authUserResponse));
 
         return () => unsubscribeOnAuthState();

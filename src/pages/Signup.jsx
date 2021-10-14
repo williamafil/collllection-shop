@@ -7,9 +7,14 @@ import FormButton from "../components/Form/FormButton";
 import { FormLabel, FormInput } from "../components/Form/FormLabelAndInput";
 import LoginSignupWrapper from "../components/UI/LoginSignupWrapper";
 
+// TODO: Show loading icon when submit
+// TODO: Form validation
+// TODO: Error message
+
 const Signup = () => {
   const history = useHistory();
 
+  const [isSubmit, setIsSubmit] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,6 +24,7 @@ const Signup = () => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     if (password !== confirmPassword) return;
+    setIsSubmit(true);
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -33,12 +39,12 @@ const Signup = () => {
           lastName,
           displayName: `${firstName} ${lastName}`,
         }).then((res) => {
+          setIsSubmit(false);
           setFirstName("");
           setLastName("");
           setEmail("");
           setPassword("");
           setConfirmPassword("");
-
           return history.push("/");
         });
       })
@@ -122,7 +128,7 @@ const Signup = () => {
             />
           </fieldset>
           <fieldset className="mt-5">
-            <FormButton>Create</FormButton>
+            <FormButton disabled={isSubmit}>Create</FormButton>
           </fieldset>
         </form>
       </LoginSignupWrapper>

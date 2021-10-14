@@ -8,7 +8,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { FormLabel, FormInput } from "../Form/FormLabelAndInput";
 import FormButton from "../Form/FormButton";
 
-// TODO: Show loading icon when submit
 // TODO: Form validation
 // TODO: Error message
 
