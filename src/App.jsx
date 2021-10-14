@@ -13,6 +13,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,7 +55,9 @@ function App() {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/notfound" component={PageNotFound} />
         <Route exact path="/" component={Home} />
+        <Route path="*" component={PageNotFound} />
       </Switch>
       <Footer />
     </>
