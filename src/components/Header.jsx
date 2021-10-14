@@ -65,7 +65,9 @@ const Header = () => {
                       </span>
                     </li>
                     <li>
-                      <span className={style.header__link_item}>Account</span>
+                      <Link to="/account" className={style.header__link_item}>
+                        Account
+                      </Link>
                     </li>
                   </>
                 ) : (
