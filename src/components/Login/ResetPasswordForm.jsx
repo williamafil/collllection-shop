@@ -18,7 +18,7 @@ const ResetPasswordForm = ({ onCancelHandler }) => {
         </fieldset>
 
         <fieldset className="mt-5">
-          <FormButton value="Submit" />
+          <FormButton>Submit</FormButton>
         </fieldset>
         <div className="mt-2.5 flex space-x-5 text-sm tracking-wide">
           <button

@@ -122,7 +122,7 @@ const Signup = () => {
             />
           </fieldset>
           <fieldset className="mt-5">
-            <FormButton value="Create" />
+            <FormButton>Create</FormButton>
           </fieldset>
         </form>
       </LoginSignupWrapper>

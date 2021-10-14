@@ -1,7 +1,7 @@
 import React from "react";
 
 const FormButton = (props) => {
-  const { value, onClickHandler, isGoogle } = props;
+  const { children, onClickHandler, isGoogle } = props;
 
   return (
     <button
@@ -12,7 +12,7 @@ const FormButton = (props) => {
           : "bg-black text-white hover:bg-dark"
       }`}
     >
-      {value}
+      {children}
     </button>
   );
 };

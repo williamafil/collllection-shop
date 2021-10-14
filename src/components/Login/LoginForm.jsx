@@ -26,12 +26,10 @@ const LoginForm = ({ onResetPasswordHandler }) => {
         />
       </fieldset>
       <fieldset className="mt-5">
-        <FormButton value="Sign In" />
-        <FormButton
-          onClickHandler={signInWithGoogle}
-          value="Sign In with Google"
-          isGoogle
-        />
+        <FormButton>Sign In</FormButton>
+        <FormButton onClickHandler={signInWithGoogle} isGoogle>
+          Sign In with Google
+        </FormButton>
       </fieldset>
       <div className="mt-10 flex space-x-5 text-sm tracking-wide">
         <Link to="/signup" className="hover:text-lightOrange-800">
