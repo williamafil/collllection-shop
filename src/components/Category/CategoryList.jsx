@@ -6,6 +6,8 @@ import { collection, getDocs } from "firebase/firestore";
 import CategoryListItem from "./CategoryListItem";
 import CategorySkeleton from "./CategorySkeleton";
 
+import clxs from "../../util/clxs";
+
 const CategoryList = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
@@ -30,7 +32,22 @@ const CategoryList = () => {
 
   return (
     <section className="category-wrapper pt-28 pb-20 flex flex-col gap-y-16 lg:flex-row lg:justify-between lg:flex-wrap">
-      {isLoading && <CategorySkeleton />}
+      {isLoading ? (
+        <CategorySkeleton show={isLoading} />
+      ) : (
+        categories.map(({ id, ...restProps }, index) => (
+          <CategoryListItem
+            key={id}
+            {...restProps}
+            className={clxs(
+              index % 2 === 1 ? "lg:translate-y-16" : "",
+              " animate-fadeIn",
+            )}
+          />
+        ))
+      )}
+
+      {/* {isLoading && <CategorySkeleton />}
       {!isLoading &&
         categories.map(({ id, ...restProps }, index) => (
           <CategoryListItem
@@ -38,7 +55,7 @@ const CategoryList = () => {
             {...restProps}
             className={index % 2 === 1 ? "lg:translate-y-16" : ""}
           />
-        ))}
+        ))} */}
     </section>
   );
 };

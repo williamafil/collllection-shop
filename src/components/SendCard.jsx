@@ -2,7 +2,7 @@ import React from "react";
 
 const SendCard = () => {
   return (
-    <section className="container mx-auto py-20">
+    <section className="container mx-auto py-20 animate-fadeIn">
       <div className="relative">
         <img
           src="https://images.unsplash.com/photo-1566125882500-87e10f726cdc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3348&q=80"
