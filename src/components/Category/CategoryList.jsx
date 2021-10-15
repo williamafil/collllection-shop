@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../store/category-slice";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import CategoryListItem from "./CategoryListItem";
 import CategorySkeleton from "./CategorySkeleton";
-
 import clxs from "../../util/clxs";
+
+const tl = gsap.timeline();
 
 const CategoryList = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
   const [isLoading, setIsLoading] = useState(false);
+  const listRef = useRef([]);
 
   useEffect(async () => {
     if (!categories.length) {
@@ -28,6 +31,8 @@ const CategoryList = () => {
       dispatch(categoryActions.setCategories(categoriesData));
       setIsLoading(false);
     }
+
+    tl.from(listRef.current, 1, { autoAlpha: 0, delay: 0.5, stagger: 0.5 });
   }, []);
 
   return (
@@ -37,12 +42,10 @@ const CategoryList = () => {
       ) : (
         categories.map(({ id, ...restProps }, index) => (
           <CategoryListItem
+            ref={(element) => (listRef.current[index] = element)}
             key={id}
             {...restProps}
-            className={clxs(
-              index % 2 === 1 ? "lg:translate-y-16" : "",
-              " animate-fadeIn",
-            )}
+            className={clxs(index % 2 === 1 ? "lg:translate-y-16" : "", "")}
           />
         ))
       )}

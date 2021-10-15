@@ -11,7 +11,9 @@ const Home = () => {
       <main className="container mx-auto pt-5 px-5 pb-20">
         <Hero />
         {/* <CategoryItems /> */}
-        <CategoryList />
+        <div className="min-h-screen">
+          <CategoryList />
+        </div>
         <SendCard />
         <Subscription />
       </main>

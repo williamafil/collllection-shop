@@ -2,11 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import clxs from "../../util/clxs";
 
-const CategoryListItem = (props) => {
+const CategoryListItem = React.forwardRef((props, ref) => {
   const { title, imageUrl, pathName, className } = props;
 
   return (
     <Link
+      ref={ref}
       to={`/${pathName}`}
       className={clxs("category-card relative w-5/12", className)}
     >
@@ -17,6 +18,6 @@ const CategoryListItem = (props) => {
       <img className="w-full" src={imageUrl} alt={title} />
     </Link>
   );
-};
+});
 
 export default CategoryListItem;
