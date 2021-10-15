@@ -14,6 +14,8 @@ module.exports = {
         lightOrange: {
           50: "#fcf6ef",
           100: "#f3edeb",
+          150: "#e2ddd7",
+          200: "#dad5d3",
           800: "#d36651",
         },
         dark: "#162317",
@@ -31,5 +33,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };

@@ -1,4 +1,5 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import categoryReducer from "./category-slice";
 import userReducer from "./user-slice";
 
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
     }),
   reducer: {
     user: userReducer,
+    category: categoryReducer,
   },
 });
 

@@ -3,13 +3,15 @@ import Hero from "../components/Hero";
 import CategoryItems from "../components/CategoryItems";
 import SendCard from "../components/SendCard";
 import Subscription from "../components/Subscription";
+import CategoryList from "../components/Category/CategoryList";
 
 const Home = () => {
   return (
     <>
       <main className="container mx-auto pt-5 px-5 pb-20">
         <Hero />
-        <CategoryItems />
+        {/* <CategoryItems /> */}
+        <CategoryList />
         <SendCard />
         <Subscription />
       </main>
