@@ -1,3 +1,3 @@
 .header__link_item {
-  @apply pb-2 text-dark tracking-wide hover:border-b hover:border-dark cursor-pointer;
+  @apply pb-2 text-dark tracking-wide border-b border-opacity-0 hover:border-dark cursor-pointer;
 }

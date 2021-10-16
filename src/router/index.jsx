@@ -7,7 +7,6 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PageNotFound from "../pages/PageNotFound";
 import Account from "../pages/protected/Account";
-import Cart from "../components/Cart/Cart";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -21,7 +20,7 @@ const Routes = () => {
         path="/account"
         component={Account}
       />
-      <Route path="/cart" component={Cart} />
+
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <Route path="/notfound" component={PageNotFound} />
