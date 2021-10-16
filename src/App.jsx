@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 import { auth, createUserProfileDoc } from "./firebase/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
@@ -17,18 +17,6 @@ import Header from "./components/Header";
 function App() {
   const dispatch = useDispatch();
   const isCartShown = useSelector((state) => state.cart.isCartShown);
-  const bodyRef = useRef(document.querySelector("body"));
-
-  // useEffect(() => {
-  //   const updatePageScroll = () => {
-  //     if (isCartShown) {
-  //       // bodyRef.current.style.overflow = "hidden";
-  //     } else {
-  //       // bodyRef.current.style.overflow = "";
-  //     }
-  //   };
-  //   updatePageScroll();
-  // }, [isCartShown]);
 
   useEffect(() => {
     const unsubscribeOnAuthState = onAuthStateChanged(
