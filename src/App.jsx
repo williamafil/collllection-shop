@@ -1,17 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+
 import { auth, createUserProfileDoc } from "./firebase/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
 import { onSnapshot } from "@firebase/firestore";
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "./store/user-slice";
 
+import Routes from "./router";
+
+import Cart from "./components/Cart/Cart";
 import Alert from "./components/Alert";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Routes from "./router";
 
 function App() {
   const dispatch = useDispatch();
+  const isCartShown = useSelector((state) => state.cart.isCartShown);
+  const bodyRef = useRef(document.querySelector("body"));
+
+  // useEffect(() => {
+  //   const updatePageScroll = () => {
+  //     if (isCartShown) {
+  //       // bodyRef.current.style.overflow = "hidden";
+  //     } else {
+  //       // bodyRef.current.style.overflow = "";
+  //     }
+  //   };
+  //   updatePageScroll();
+  // }, [isCartShown]);
 
   useEffect(() => {
     const unsubscribeOnAuthState = onAuthStateChanged(
@@ -43,10 +60,13 @@ function App() {
 
   return (
     <>
-      <Alert />
-      <Header />
-      <Routes />
-      <Footer />
+      {isCartShown && <Cart />}
+      <div className={isCartShown ? "hidden" : "block"}>
+        <Alert />
+        <Header />
+        <Routes />
+        <Footer />
+      </div>
     </>
   );
 }

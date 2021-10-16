@@ -1,5 +1,5 @@
 import React from "react";
-import clxs from "../../util/clxs";
+import clxs from "../../utils/clxs";
 import { ReactComponent as LoadingIcon } from "../../images/loading.svg";
 
 const FormButton = (props) => {

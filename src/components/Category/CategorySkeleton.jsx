@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import clxs from "../../util/clxs";
+import clxs from "../../utils/clxs";
 
 const CategorySkeleton = ({ show }) => {
   const [render, setRender] = useState(show);

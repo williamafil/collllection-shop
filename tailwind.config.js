@@ -45,7 +45,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    scale: ["responsive", "hover", "focus", "active", "group-hover"],
+    extend: {
+      transitionProperty: ["hover", "focus"],
+    },
   },
   plugins: [require("@tailwindcss/aspect-ratio")],
 };

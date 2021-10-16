@@ -6,7 +6,7 @@ import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import CategoryListItem from "./CategoryListItem";
 import CategorySkeleton from "./CategorySkeleton";
-import clxs from "../../util/clxs";
+import clxs from "../../utils/clxs";
 
 const tl = gsap.timeline();
 

@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import categoryReducer from "./category-slice";
 import userReducer from "./user-slice";
+import cartReducer from "./cart-slice";
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -14,6 +15,7 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     category: categoryReducer,
+    cart: cartReducer,
   },
 });
 

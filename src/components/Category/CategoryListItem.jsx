@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import clxs from "../../util/clxs";
+import clxs from "../../utils/clxs";
 
 const CategoryListItem = React.forwardRef((props, ref) => {
   const { title, imageUrl, pathName, className } = props;

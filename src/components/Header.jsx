@@ -1,12 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { cartActions } from "../store/cart-slice";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebase";
 import { ReactComponent as BagIcon } from "../images/bag.svg";
 import style from "./Header.module.css";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
+
+  const cartToggleHandler = () => {
+    dispatch(cartActions.toggle());
+  };
 
   return (
     <header className="container mx-auto py-10 px-5">
@@ -90,10 +96,11 @@ const Header = () => {
               </ul>
             </div>
             <div
+              onClick={cartToggleHandler}
               className={`${style.header__link_item} flex justify-end items-center pb-0.5`}
             >
               <BagIcon className="w-7" />
-              <span className="ml-1 text-lg">0</span>
+              <span className="ml-1 text-base">0</span>
             </div>
           </div>
         </div>

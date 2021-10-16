@@ -4,7 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
 html,
 body {
   @apply bg-lightOrange-50 font-arsenal;
+}
+
+.cart-open {
+  overflow: hidden;
+  overflow-y: hidden;
 }
