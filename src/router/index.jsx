@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PageNotFound from "../pages/PageNotFound";
 import Account from "../pages/protected/Account";
+import Category from "../components/Category/Category";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -24,6 +25,7 @@ const Routes = () => {
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <Route path="/notfound" component={PageNotFound} />
+      <Route path="/collections/:pathName" component={Category} />
       <Route exact path="/" component={Home} />
       <Route path="*" component={PageNotFound} />
     </Switch>

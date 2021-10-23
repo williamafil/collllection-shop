@@ -8,7 +8,8 @@ const CategoryListItem = React.forwardRef((props, ref) => {
   return (
     <Link
       ref={ref}
-      to={`/${pathName}`}
+      to={`/collections/${pathName}`}
+      // to={`${url}/collections/${pathName}`}
       className={clxs("category-card relative w-5/12", className)}
     >
       <h2 className="absolute left-5 top-5 text-3xl font-thin tracking-wide">

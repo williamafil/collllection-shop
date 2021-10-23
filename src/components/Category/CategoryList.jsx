@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../store/category-slice";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import clxs from "../../utils/clxs";
+
+import Category from "./Category/";
 import CategoryListItem from "./CategoryListItem";
 import CategorySkeleton from "./CategorySkeleton";
-import clxs from "../../utils/clxs";
 
 const tl = gsap.timeline();
 
@@ -36,30 +38,26 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <section className="category-wrapper pt-28 pb-20 flex flex-col gap-y-16 lg:flex-row lg:justify-between lg:flex-wrap">
-      {isLoading ? (
-        <CategorySkeleton show={isLoading} />
-      ) : (
-        categories.map(({ id, ...restProps }, index) => (
-          <CategoryListItem
-            ref={(element) => (listRef.current[index] = element)}
-            key={id}
-            {...restProps}
-            className={clxs(index % 2 === 1 ? "lg:translate-y-16" : "", "")}
-          />
-        ))
-      )}
+    <>
+      <section className="category-wrapper pt-28 pb-20 flex flex-col gap-y-16 lg:flex-row lg:justify-between lg:flex-wrap">
+        {isLoading && <CategorySkeleton show={isLoading} />}
+        {!isLoading &&
+          categories.map(({ id, ...restProps }, index) => (
+            <CategoryListItem
+              ref={(element) => (listRef.current[index] = element)}
+              key={id}
+              {...restProps}
+              className={clxs(index % 2 === 1 ? "lg:translate-y-16" : "", "")}
+            />
+          ))}
+      </section>
 
-      {/* {isLoading && <CategorySkeleton />}
-      {!isLoading &&
-        categories.map(({ id, ...restProps }, index) => (
-          <CategoryListItem
-            key={id}
-            {...restProps}
-            className={index % 2 === 1 ? "lg:translate-y-16" : ""}
-          />
-        ))} */}
-    </section>
+      {/* <Switch>
+        <Route path={`${path}/collections/:categoryId`}>
+          <Category />
+        </Route>
+      </Switch> */}
+    </>
   );
 };
 
