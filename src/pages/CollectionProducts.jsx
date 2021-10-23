@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { categoryActions } from "../../store/category-slice";
-import { db } from "../../firebase/firebase";
+import { categoryActions } from "../store/category-slice";
+import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-const Category = () => {
+const CollectionProducts = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
   const { pathName } = useParams();
@@ -43,7 +43,7 @@ const Category = () => {
     // const productQuery = query(productsRef, where("categoryId", "==", pathName));
   }, []);
 
-  return <div>{pathName}</div>;
+  return <div>{pathName}...</div>;
 };
 
-export default Category;
+export default CollectionProducts;

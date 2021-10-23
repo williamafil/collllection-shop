@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import CollectionProducts from "../pages/CollectionProducts";
 import PageNotFound from "../pages/PageNotFound";
 import Account from "../pages/protected/Account";
-import Category from "../components/Category/Category";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -25,7 +25,7 @@ const Routes = () => {
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <Route path="/notfound" component={PageNotFound} />
-      <Route path="/collections/:pathName" component={Category} />
+      <Route path="/collections/:pathName" component={CollectionProducts} />
       <Route exact path="/" component={Home} />
       <Route path="*" component={PageNotFound} />
     </Switch>
