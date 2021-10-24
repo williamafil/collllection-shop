@@ -1,49 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { categoryActions } from "../store/category-slice";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 const CollectionProducts = () => {
-  const dispatch = useDispatch();
-  const categories = useSelector((state) => state.category.categories);
   const { pathName } = useParams();
-  const [currentCategory, setCurrentCategory] = useState(null);
+  const [products, setProducts] = useState([]);
 
   useEffect(async () => {
-    if (!categories.length) {
-      const categoriesSnapshot = await getDocs(collection(db, "categories"));
-      const categoriesData = categoriesSnapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data(),
-        };
-      });
-      dispatch(categoryActions.setCategories(categoriesData));
-
-      const result = await categoriesData.filter(
-        (item) => item.pathName === pathName,
-      );
-      setCurrentCategory(result[0]);
-    }
-  }, [categories]);
-
-  useEffect(async () => {
-    const categoriesRef = await collection(db, "categories");
-    const q = query(categoriesRef, where("pathName", "==", pathName));
-
+    const productsRef = collection(db, "products");
+    const q = query(productsRef, where("categoryId", "==", pathName));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+    const productsData = querySnapshot.docs.map((product) => {
+      return {
+        id: product.id,
+        ...product.data(),
+      };
     });
-
-    const productsRef = await collection(db, "products");
-    // const productQuery = query(productsRef, where("categoryId", "==", pathName));
+    setProducts(productsData);
   }, []);
 
-  return <div>{pathName}...</div>;
+  return (
+    <div className="container mx-auto px-4">
+      <h1>{pathName}</h1>
+
+      <div class="min-h-screen">
+        <div class="transition duration-700 ease-in max-w-7xl mx-auto sm:masonry-col-2 md:masonry-col-3 lg:masonry-col-4 before:box-inherit after:box-inherit">
+          {products.map((product) => (
+            <div class="mb-8 break-inside">
+              <img className="" src={product.images[0]} alt={product.title} />
+              <div className="">
+                <h3 className="font-bold tracking-wide text-gray-700">
+                  {product.title}
+                </h3>
+                <h3>${product.price}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default CollectionProducts;

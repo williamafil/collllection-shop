@@ -6,7 +6,6 @@ import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import clxs from "../../utils/clxs";
 
-import Category from "./Category/";
 import CategoryListItem from "./CategoryListItem";
 import CategorySkeleton from "./CategorySkeleton";
 
