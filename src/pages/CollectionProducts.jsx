@@ -25,10 +25,10 @@ const CollectionProducts = () => {
     <div className="container mx-auto px-5">
       <h1>{pathName}</h1>
 
-      <div class="min-h-1/2">
-        <div class="max-w-7xl mx-auto sm:masonry-col-2 md:masonry-col-3 lg:masonry-col-4 before:box-inherit after:box-inherit">
+      <div className="min-h-1/2">
+        <div className="max-w-7xl mx-auto sm:masonry-col-2 md:masonry-col-3 lg:masonry-col-4 before:box-inherit after:box-inherit">
           {products.map((product) => (
-            <div class="mb-8 break-inside">
+            <div key={product.id} className="mb-8 break-inside">
               <Link to={`/products/${product.slug}`}>
                 <img className="" src={product.images[0]} alt={product.title} />
                 <div className="">
