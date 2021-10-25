@@ -27,12 +27,15 @@ const Product = () => {
   }, []);
 
   const onInputQuantityHandler = (event) => {
-    setQuantity(event.target.value);
+    if (parseInt(event.target.value) > 99) return;
+    if (parseInt(event.target.value) < 1) return;
+    if (!Number.isInteger(parseInt(event.target.value))) return;
+    setQuantity(parseInt(event.target.value));
   };
 
   const decrementHandler = () => {
     setQuantity((prev) => {
-      if (prev <= 0) return prev;
+      if (prev <= 1) return prev;
       return (prev -= 1);
     });
   };
@@ -66,7 +69,7 @@ const Product = () => {
                 <input
                   type="number"
                   step="1"
-                  min="0"
+                  min="1"
                   max="99"
                   className="border-none w-full h-full text-center text-lg"
                   value={quantity}

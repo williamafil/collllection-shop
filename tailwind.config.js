@@ -28,6 +28,9 @@ module.exports = {
       fontSize: {
         "2xs": ".50rem",
       },
+      boxShadow: {
+        "bottom-inner": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
+      },
       animation: {
         fadeIn: "fadeIn 1s ease-in-out",
         fadeOut: "fadeOut .8s ease-in-out",

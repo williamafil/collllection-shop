@@ -60,8 +60,8 @@ const ProductGallery = ({ images }) => {
         </div>
       </aside>
       <aside className="hidden md:block">
-        <div className="w-full  bg-gray-50 flex">
-          <div className="w-3/12 bg-gray-50 px-4 space-y-4">
+        <div className="w-full flex">
+          <div className="relative w-3/12 px-4 space-y-4 overflow-y-auto">
             {imgs.map((img, index) => (
               <img
                 className="cursor-pointer"
@@ -71,7 +71,9 @@ const ProductGallery = ({ images }) => {
                 onClick={(event) => onSetImgHandler(index)}
               />
             ))}
+            <div class="w-full h-10 absolute left-0 bottom-0 bg-gradient-to-t from-white" />
           </div>
+
           <div className="w-9/12">
             <img src={imgs[currentIdx]} alt="img" />
           </div>
