@@ -7,6 +7,10 @@ import { ReactComponent as MinusIcon } from "../images/minus.svg";
 import { ReactComponent as PlusIcon } from "../images/plus.svg";
 import ProductGallery from "../components/Product/ProductGallery";
 
+// TODO:
+// 1. Add product to redux store
+// 2. Keep cart items persistent
+
 const Product = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState({});
