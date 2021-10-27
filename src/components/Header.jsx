@@ -9,6 +9,7 @@ import style from "./Header.module.css";
 const Header = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
+  const numberOfCartItems = useSelector((state) => state.cart.cartItems.length);
 
   const cartToggleHandler = () => {
     dispatch(cartActions.toggle());
@@ -100,7 +101,7 @@ const Header = () => {
               className={`${style.header__link_item} flex justify-end items-center pb-0.5`}
             >
               <BagIcon className="w-7" />
-              <span className="ml-1 text-base">0</span>
+              <span className="ml-1 text-base">{numberOfCartItems}</span>
             </div>
           </div>
         </div>

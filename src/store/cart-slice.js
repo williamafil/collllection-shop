@@ -4,10 +4,14 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     isCartShown: false,
+    cartItems: [],
   },
   reducers: {
     toggle: (state) => {
       state.isCartShown = !state.isCartShown;
+    },
+    addProduct: (state, action) => {
+      state.cartItems = [...state.cartItems, action.payload];
     },
   },
 });

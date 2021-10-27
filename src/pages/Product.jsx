@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../store/cart-slice";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -13,6 +15,7 @@ import ProductGallery from "../components/Product/ProductGallery";
 
 const Product = () => {
   const { slug } = useParams();
+  const dispatch = useDispatch();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
 
@@ -51,6 +54,18 @@ const Product = () => {
     });
   };
 
+  const addProductToCartHandler = () => {
+    dispatch(
+      cartActions.addProduct({
+        id: product.id,
+        imageUrl: product.images[0],
+        title: product.title,
+        price: product.price,
+        quantity,
+      }),
+    );
+  };
+
   return (
     <div className="bg-white ">
       <div className="product container mx-auto px-5 py-14 md:flex md:space-x-8">
@@ -62,10 +77,10 @@ const Product = () => {
           <h2 className="text-5xl leading-snug">Paper Fir Tree</h2>
           <h3 className="text-2xl">$ 2.90</h3>
 
-          <div className="mt-10 space-y-12">
-            <div className="flex items-center space-x-4">
+          <div className="mt-10 w-full xs:w-96 space-y-12">
+            <div className="flex items-center space-x-4 ">
               <p className="text-lg ">Quantity</p>
-              <div className="px-4 h-14 border border-black flex justify-between items-center">
+              <div className="px-4 w-full h-14 border border-black flex justify-between items-center">
                 <MinusIcon
                   onClick={decrementHandler}
                   className="cursor-pointer"
@@ -87,7 +102,10 @@ const Product = () => {
             </div>
 
             <div className="buttons flex flex-col space-y-6">
-              <button className="h-14 w-full border border-black">
+              <button
+                onClick={addProductToCartHandler}
+                className="h-14 w-full border border-black"
+              >
                 Add to Cart
               </button>
 

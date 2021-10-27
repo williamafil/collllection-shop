@@ -34,7 +34,7 @@ const ProductGallery = ({ images }) => {
 
   return (
     <>
-      <aside className="md:hidden">
+      <aside className="gallery-mobile md:hidden">
         <div className="h-56 sm:h-64 md:h-72 w-full overflow-hidden">
           <section
             ref={sliderRef}
@@ -59,9 +59,10 @@ const ProductGallery = ({ images }) => {
           <ArrowRightIcon className="cursor-pointer" />
         </div>
       </aside>
-      <aside className="hidden md:block">
-        <div className="w-full flex">
-          <div className="relative w-3/12 px-4 space-y-4 overflow-y-auto">
+
+      <aside className="gallery-desktop hidden md:block">
+        <div className="relative h-64 w-full flex">
+          <div className="w-3/12 h-full pb-6 px-4 space-y-6 overflow-y-auto">
             {imgs.map((img, index) => (
               <img
                 className="cursor-pointer"
@@ -71,7 +72,7 @@ const ProductGallery = ({ images }) => {
                 onClick={(event) => onSetImgHandler(index)}
               />
             ))}
-            <div class="w-full h-10 absolute left-0 bottom-0 bg-gradient-to-t from-white" />
+            <div className="w-3/12 h-10 absolute left-0 bottom-0 bg-gradient-to-t from-white" />
           </div>
 
           <div className="w-9/12">

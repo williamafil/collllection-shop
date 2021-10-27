@@ -1,13 +1,13 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/cart-slice";
 
 import clxs from "../../utils/clxs";
-import { ReactComponent as MinusIcon } from "../../images/minus.svg";
-import { ReactComponent as PlusIcon } from "../../images/plus.svg";
 
 import "../../index.css";
+import Product from "../../pages/Product";
+import CartItem from "./CartItem";
 
 const CartElement = (props) => {
   const dispatch = useDispatch();
@@ -15,6 +15,8 @@ const CartElement = (props) => {
   const toggleCartHandler = () => {
     dispatch(cartActions.toggle());
   };
+
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   return (
     <section
@@ -60,89 +62,9 @@ const CartElement = (props) => {
           </div>
         </header>
 
-        <article className="grid grid-cols-12 mt-10">
-          <div className=" col-span-3 md:col-span-2 xl:col-span-1">
-            <div className="pt-1.5 w-16 sm:w-20 lg:w-24">
-              <img
-                src="https://images.unsplash.com/photo-1503602642458-232111445657?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1374&q=80"
-                alt="product"
-              />
-            </div>
-          </div>
-          <div className=" col-span-9 md:col-span-10 xl:col-span-11 flex flex-col justify-between md:justify-start">
-            <div className="flex justify-between items-stretch">
-              <div className="px-2 flex flex-col md:w-full md:flex-row md:justify-between">
-                <h3 className="text-base leading-6">
-                  Herman Miller Aeron Stool version 2
-                </h3>
-                <div className="py-4 md:p-0 pr-4 flex w-full md:w-28">
-                  <button className="py-1 pr-4 text-base">
-                    <MinusIcon />
-                  </button>
-                  <input
-                    className="w-full bg-transparent text-center text-base"
-                    type="number"
-                    value="2"
-                  />
-                  <button className="py-1 pl-4 text-base">
-                    <PlusIcon />
-                  </button>
-                </div>
-              </div>
-
-              <div className="px-2 min-w-max md:w-2/6 text-base text-right">
-                $ 178,848.95
-              </div>
-            </div>
-            <div className="pl-2 md:py-6">
-              <p className="text-xs tracking-wide cursor-pointer">
-                Remove Item
-              </p>
-            </div>
-          </div>
-        </article>
-
-        <article className="grid grid-cols-12 mt-10">
-          <div className=" col-span-3 md:col-span-2 xl:col-span-1">
-            <div className="pt-1.5 w-16 sm:w-20 lg:w-24">
-              <img
-                src="https://images.unsplash.com/photo-1608319294852-d87737e8e46c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OTd8fG5pa2UlMjBhaXIlMjBmb3JjZSUyMDF8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                alt="product"
-              />
-            </div>
-          </div>
-          <div className=" col-span-9 md:col-span-10 xl:col-span-11 flex flex-col justify-between md:justify-start">
-            <div className="flex justify-between items-stretch">
-              <div className="px-2 flex flex-col md:w-full md:flex-row md:justify-between">
-                <h3 className="text-base leading-6">
-                  Herman Miller Aeron Stool version 2
-                </h3>
-                <div className="py-4 md:p-0 pr-4 flex w-full md:w-28">
-                  <button className="py-1 pr-4 text-base">
-                    <MinusIcon />
-                  </button>
-                  <input
-                    className="w-full bg-transparent text-center text-base"
-                    type="number"
-                    value="2"
-                  />
-                  <button className="py-1 pl-4 text-base">
-                    <PlusIcon />
-                  </button>
-                </div>
-              </div>
-
-              <div className="px-2 min-w-max md:w-2/6 text-base text-right">
-                $ 178,848.95
-              </div>
-            </div>
-            <div className="pl-2 md:py-6">
-              <p className="text-xs tracking-wide cursor-pointer">
-                Remove Item
-              </p>
-            </div>
-          </div>
-        </article>
+        {cartItems.map((item) => (
+          <CartItem key={item.id} item={item} />
+        ))}
 
         <div className="my-10 w-full border-t border-lightOrange-800" />
 
