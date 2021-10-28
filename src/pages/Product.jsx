@@ -74,8 +74,8 @@ const Product = () => {
         </header>
 
         <main className="md:w-1/2">
-          <h2 className="text-5xl leading-snug">Paper Fir Tree</h2>
-          <h3 className="text-2xl">$ 2.90</h3>
+          <h2 className="text-5xl leading-snug">{product.title}</h2>
+          <h3 className="text-2xl">$ {product.price}</h3>
 
           <div className="mt-10 w-full xs:w-96 space-y-12">
             <div className="flex items-center space-x-4 ">

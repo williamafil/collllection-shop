@@ -1,9 +1,22 @@
 import React from "react";
-import clxs from "../../utils/clxs";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../store/cart-slice";
+
 import { ReactComponent as MinusIcon } from "../../images/minus.svg";
 import { ReactComponent as PlusIcon } from "../../images/plus.svg";
 
 const CartItem = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const increaseItemQuantityHandler = (product) => {
+    dispatch(
+      cartActions.addProduct({
+        ...product,
+        quantity: 1,
+      }),
+    );
+  };
+
   return (
     <article className="grid grid-cols-12 mt-10">
       <div className=" col-span-3 md:col-span-2 xl:col-span-1">
@@ -25,13 +38,13 @@ const CartItem = ({ item }) => {
                 value={item.quantity}
               />
               <button className="py-1 pl-4 text-base">
-                <PlusIcon />
+                <PlusIcon onClick={() => increaseItemQuantityHandler(item)} />
               </button>
             </div>
           </div>
 
           <div className="px-2 min-w-max md:w-2/6 text-base text-right">
-            $ {item.price}
+            $ {item.totalPrice}
           </div>
         </div>
         <div className="pl-2 md:py-6">

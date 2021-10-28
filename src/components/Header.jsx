@@ -9,7 +9,7 @@ import style from "./Header.module.css";
 const Header = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
-  const numberOfCartItems = useSelector((state) => state.cart.cartItems.length);
+  const numberOfCartItems = useSelector((state) => state.cart.totalQuantity);
 
   const cartToggleHandler = () => {
     dispatch(cartActions.toggle());

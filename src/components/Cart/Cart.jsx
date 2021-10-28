@@ -11,34 +11,51 @@ import CartItem from "./CartItem";
 
 const CartElement = (props) => {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
 
   const toggleCartHandler = () => {
     dispatch(cartActions.toggle());
   };
 
-  const cartItems = useSelector((state) => state.cart.cartItems);
-
-  return (
-    <section
-      className={clxs(
-        "pb-10",
-        " bg-lightOrange-50 z-30",
-        "w-full min-h-max text-lightOrange-800 animate-fadeIn",
-        props.className,
-      )}
-    >
-      <div
-        onClick={toggleCartHandler}
+  const CartWrapper = ({ children }) => {
+    return (
+      <section
         className={clxs(
-          "w-8 h-8 absolute top-4 right-4 cursor-pointer",
-          "flex flex-col justify-center items-center",
-          "transform transition-all hover:rotate-90",
+          "pb-10",
+          " bg-lightOrange-50 z-30",
+          "w-full min-h-max text-lightOrange-800 animate-fadeIn",
+          props.className,
         )}
       >
-        <span className="absolute h-px w-full bg-lightOrange-800 rotate-45"></span>
-        <span className="absolute h-px w-full bg-lightOrange-800 -rotate-45"></span>
+        <div
+          onClick={toggleCartHandler}
+          className={clxs(
+            "w-8 h-8 absolute top-4 right-4 cursor-pointer",
+            "flex flex-col justify-center items-center",
+            "transform transition-all hover:rotate-90",
+          )}
+        >
+          <span className="absolute h-px w-full bg-lightOrange-800 rotate-45"></span>
+          <span className="absolute h-px w-full bg-lightOrange-800 -rotate-45"></span>
+        </div>
+        <div className="container mx-auto px-8 pt-20">{children}</div>
+      </section>
+    );
+  };
+
+  const EmptyCart = () => {
+    return (
+      <div className="pt-40 w-full flex justify-center">
+        <h2>Your cart is currently empty.</h2>
       </div>
-      <div className="container mx-auto px-8 pt-20">
+    );
+  };
+
+  const CartDetail = () => {
+    return (
+      <>
         <header className="grid grid-cols-12 mt-10 md:pb-10 md:border-b border-lightOrange-800">
           <div className=" col-span-5 md:col-span-3 xl:col-span-2">
             <h2 className="text-xl tracking-wide">Shopping Cart</h2>
@@ -80,7 +97,7 @@ const CartElement = (props) => {
           <main className="md:flex-1 lg:flex-1">
             <div className="mt-10 md:m-0 flex justify-between">
               <h3>Subtotal</h3>
-              <h3>$ 234.56</h3>
+              <h3>$ {totalPrice}</h3>
             </div>
             <p className="mt-6 text-xs">
               Shipping & taxes calculated at checkout
@@ -91,8 +108,12 @@ const CartElement = (props) => {
             </button>
           </main>
         </footer>
-      </div>
-    </section>
+      </>
+    );
+  };
+
+  return (
+    <CartWrapper>{totalQuantity ? <CartDetail /> : <EmptyCart />}</CartWrapper>
   );
 };
 
