@@ -6,6 +6,7 @@ import { ReactComponent as MinusIcon } from "../../images/minus.svg";
 import { ReactComponent as PlusIcon } from "../../images/plus.svg";
 
 const CartItem = ({ item }) => {
+  console.log("item prop: ", item);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(item.quantity);
 
@@ -29,7 +30,16 @@ const CartItem = ({ item }) => {
     );
   };
 
-  const onChangeItemQuantity = (event, product) => {
+  const removeItemHandler = (product) => {
+    dispatch(
+      cartActions.removeProduct({
+        ...product,
+        quantity: product.quantity,
+      }),
+    );
+  };
+
+  const onChangeItemQuantityHandler = (event, product) => {
     if (parseInt(event.target.value) > 99) return;
     if (parseInt(event.target.value) < 1) return;
     if (!Number.isInteger(parseInt(event.target.value))) return;
@@ -88,7 +98,7 @@ const CartItem = ({ item }) => {
                 min="1"
                 max="99"
                 value={itemQuantity}
-                onChange={(event) => onChangeItemQuantity(event, item)}
+                onChange={(event) => onChangeItemQuantityHandler(event, item)}
               />
               <button
                 className="py-1 pl-4 text-base"
@@ -104,7 +114,12 @@ const CartItem = ({ item }) => {
           </div>
         </div>
         <div className="pl-2 md:py-6">
-          <p className="text-xs tracking-wide cursor-pointer">Remove Item</p>
+          <p
+            className="text-xs tracking-wide cursor-pointer"
+            onClick={() => removeItemHandler(item)}
+          >
+            Remove Item
+          </p>
         </div>
       </div>
     </article>

@@ -58,7 +58,10 @@ const cartSlice = createSlice({
             existingItem.totalPrice -
             existingItem.price * action.payload.quantity
           ).toFixed(2);
-        } else if (existingItem.quantity === 1) {
+        } else if (
+          existingItem.quantity === 1 ||
+          action.payload.quantity === existingItem.quantity
+        ) {
           const newItems = state.cartItems.filter(
             (item) => item.id !== action.payload.id,
           );
