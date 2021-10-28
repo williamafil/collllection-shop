@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
 
@@ -9,10 +9,9 @@ import CartItem from "./CartItem";
 import CartWrapper from "./CartWrapper";
 
 const CartElement = (props) => {
-  console.log("props: ", props);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const subTotal = useSelector((state) => state.cart.subTotal);
 
   const EmptyCart = () => {
     return (
@@ -66,7 +65,7 @@ const CartElement = (props) => {
           <main className="md:flex-1 lg:flex-1">
             <div className="mt-10 md:m-0 flex justify-between">
               <h3>Subtotal</h3>
-              <h3>$ {totalPrice}</h3>
+              <h3>$ {subTotal}</h3>
             </div>
             <p className="mt-6 text-xs">
               Shipping & taxes calculated at checkout

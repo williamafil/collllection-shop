@@ -22,7 +22,7 @@ const CollectionProducts = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-5">
+    <div className="container mx-auto px-5 py-10">
       <h1>{pathName}</h1>
 
       <div className="min-h-1/2">
