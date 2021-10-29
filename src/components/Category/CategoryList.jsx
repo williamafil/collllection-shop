@@ -33,29 +33,27 @@ const CategoryList = () => {
       setIsLoading(false);
     }
 
-    tl.from(listRef.current, 1, { autoAlpha: 0, delay: 0.5, stagger: 0.5 });
+    tl.from(listRef.current, 0.8, { autoAlpha: 0, delay: 0.4, stagger: 0.4 });
   }, []);
 
   return (
     <>
-      <section className="category-wrapper pt-28 pb-20 flex flex-col gap-y-16 lg:flex-row lg:justify-between lg:flex-wrap">
-        {isLoading && <CategorySkeleton show={isLoading} />}
-        {!isLoading &&
-          categories.map(({ id, ...restProps }, index) => (
-            <CategoryListItem
-              ref={(element) => (listRef.current[index] = element)}
-              key={id}
-              {...restProps}
-              className={clxs(index % 2 === 1 ? "lg:translate-y-16" : "", "")}
-            />
-          ))}
-      </section>
+      <section className="category-wrapper w-1/2 md:w-full pt-10 pb-16">
+        <div className="max-w-7xl mx-auto md:masonry-col-2  before:box-inherit after:box-inherit">
+          {isLoading && <CategorySkeleton show={isLoading} />}
 
-      {/* <Switch>
-        <Route path={`${path}/collections/:categoryId`}>
-          <Category />
-        </Route>
-      </Switch> */}
+          {!isLoading &&
+            categories.map(({ id, ...restProps }, index) => (
+              <div key={id} className="mb-8 break-inside mt-12">
+                <CategoryListItem
+                  ref={(element) => (listRef.current[index] = element)}
+                  key={id}
+                  {...restProps}
+                />
+              </div>
+            ))}
+        </div>
+      </section>
     </>
   );
 };

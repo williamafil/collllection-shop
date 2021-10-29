@@ -14,47 +14,36 @@ const CategorySkeleton = ({ show }) => {
 
   return (
     render && (
-      <section
-        className={clxs(
-          "category-wrapper",
-          "animate-pulse w-full pb-20 gap-y-16",
-          "flex flex-col lg:flex-row lg:justify-between lg:flex-wrap",
-          show ? "" : "animate-fadeOut",
-        )}
-        onAnimationEnd={onAnimationEnd}
-      >
-        <article className="category-card relative w-5/12 ">
-          <div className="aspect-w-3 aspect-h-4 bg-lightOrange-150" />
-        </article>
-
-        <article className="mt-16 category-card relative w-5/12 ">
-          <div className="aspect-w-3 aspect-h-4 bg-lightOrange-200" />
-        </article>
-
-        <article className="category-card w-5/12 ">
-          <div className="aspect-w-3 aspect-h-4 bg-lightOrange-150" />
-        </article>
-
-        <article className="category-card relative w-5/12 ">
-          <div className="lg:translate-y-16 aspect-w-3 aspect-h-4 bg-lightOrange-200" />
-        </article>
-
-        <article className="category-card relative w-5/12">
-          <div className="aspect-w-4 aspect-h-3 bg-lightOrange-150" />
-        </article>
-
-        <article className="category-card relative w-5/12">
-          <div className="lg:translate-y-16 aspect-w-4 aspect-h-3 bg-lightOrange-200" />
-        </article>
-
-        <article className="category-card relative w-5/12">
-          <div className="aspect-w-3 aspect-h-4 bg-lightOrange-150" />
-        </article>
-
-        <article className="category-card relative w-5/12">
-          <div className="lg:translate-y-16 aspect-w-3 aspect-h-4 bg-lightOrange-200" />
-        </article>
-      </section>
+      <>
+        <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
+          <div className="bg-gray-300 h-8 w-48 absolute left-5 top-4"></div>
+        </div>
+        <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
+          <div className="bg-gray-300 h-8 w-16 absolute left-5 top-4"></div>
+          <div className="bg-gray-300 h-8 w-24 absolute left-5 top-12"></div>
+        </div>
+        <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
+          <div className="bg-gray-300 h-8 w-32 absolute left-5 top-4"></div>
+          <div className="bg-gray-300 h-8 w-8 absolute left-5 top-12"></div>
+          <div className="bg-gray-300 h-8 w-32 absolute left-5 top-20"></div>
+        </div>
+        <div className="relative mb-8 break-inside mt-12 w-full h-28 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
+          <div className="bg-gray-300 h-8 w-32 absolute left-5 top-4"></div>
+          <div className="bg-gray-300 h-8 w-28 absolute left-5 top-12"></div>
+        </div>
+        <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
+          <div className="bg-gray-300 h-8 w-48 absolute left-5 top-4"></div>
+        </div>
+        <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
+          <div className="bg-gray-300 h-8 w-48 absolute left-5 top-4"></div>
+        </div>
+        <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
+          <div className="bg-gray-300 h-8 w-48 absolute left-5 top-4"></div>
+        </div>
+        <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
+          <div className="bg-gray-300 h-8 w-48 absolute left-5 top-4"></div>
+        </div>
+      </>
     )
   );
 };

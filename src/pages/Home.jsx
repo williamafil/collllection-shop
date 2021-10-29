@@ -10,7 +10,6 @@ const Home = () => {
     <>
       <main className="overflow-hidden container mx-auto pt-5 px-5 pb-20">
         <Hero />
-        {/* <CategoryItems /> */}
         <div className="min-h-screen">
           <CategoryList />
         </div>

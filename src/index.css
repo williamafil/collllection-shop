@@ -8,7 +8,7 @@
   @variants responsive {
     .masonry-col-2 {
       column-count: 2;
-      column-gap: 2em;
+      column-gap: 3em;
     }
 
     .masonry-col-3 {
