@@ -6,7 +6,6 @@ import { ReactComponent as MinusIcon } from "../../images/minus.svg";
 import { ReactComponent as PlusIcon } from "../../images/plus.svg";
 
 const CartItem = ({ item }) => {
-  console.log("item prop: ", item);
   const dispatch = useDispatch();
   const [itemQuantity, setItemQuantity] = useState(item.quantity);
 
