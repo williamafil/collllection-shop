@@ -8,14 +8,16 @@ import CategoryList from "../components/Category/CategoryList";
 const Home = () => {
   return (
     <>
-      <main className="overflow-hidden container mx-auto pt-5 px-5 pb-20">
-        <Hero />
-        <div className="min-h-screen">
-          <CategoryList />
-        </div>
-        <SendCard />
-        <Subscription />
-      </main>
+      <div className="bg-lightOrange-50">
+        <main className="overflow-hidden container mx-auto pt-5 px-5 pb-20 ">
+          <Hero />
+          <div className="min-h-screen">
+            <CategoryList />
+          </div>
+          <SendCard />
+          <Subscription />
+        </main>
+      </div>
     </>
   );
 };

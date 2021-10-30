@@ -15,7 +15,7 @@ const CartWrapper = ({ children }) => {
       className={clxs(
         "pb-10",
         " bg-lightOrange-50 z-30",
-        "w-full min-h-max text-lightOrange-800 animate-fadeIn",
+        "w-full min-h-screen text-lightOrange-800 animate-fadeIn",
       )}
     >
       <div

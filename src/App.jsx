@@ -50,7 +50,7 @@ function App() {
     <>
       {isCartShown && <Cart />}
       <div className={isCartShown ? "hidden" : "block"}>
-        <Alert />
+        {/* <Alert /> */}
         <Header />
         <Routes />
         <Footer />

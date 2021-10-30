@@ -43,7 +43,7 @@
 
 html,
 body {
-  @apply bg-lightOrange-50 font-arsenal;
+  @apply font-arsenal;
 }
 
 .cart-open {
