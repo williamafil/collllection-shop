@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../store/category-slice";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import clxs from "../../utils/clxs";
-
 import CategoryListItem from "./CategoryListItem";
 import CategorySkeleton from "./CategorySkeleton";
 
@@ -39,9 +37,7 @@ const CategoryList = () => {
   return (
     <>
       <section className="category-wrapper w-1/2 md:w-full pt-10 pb-16">
-        {/* <div className="max-w-7xl mx-auto md:masonry-col-2  before:box-inherit after:box-inherit"> */}
         {isLoading && <CategorySkeleton show={isLoading} />}
-
         {!isLoading && (
           <div className="max-w-7xl mx-auto md:masonry-col-2  before:box-inherit after:box-inherit">
             {categories.map(({ id, ...restProps }, index) => (
@@ -55,7 +51,6 @@ const CategoryList = () => {
             ))}
           </div>
         )}
-        {/* </div> */}
       </section>
     </>
   );
