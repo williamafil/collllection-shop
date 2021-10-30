@@ -14,7 +14,13 @@ const CategorySkeleton = ({ show }) => {
 
   return (
     render && (
-      <>
+      <section
+        className={clxs(
+          "max-w-7xl mx-auto md:masonry-col-2 before:box-inherit after:box-inherit",
+          show ? "" : "animate-fadeOut",
+        )}
+        onAnimationEnd={onAnimationEnd}
+      >
         <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
           <div className="bg-gray-300 h-8 w-48 absolute left-5 top-4"></div>
         </div>
@@ -43,7 +49,7 @@ const CategorySkeleton = ({ show }) => {
         <div className="relative mb-8 break-inside mt-12 w-full h-56 sm:h-80 md:h-96 bg-gray-200 animate-pulse">
           <div className="bg-gray-300 h-8 w-48 absolute left-5 top-4"></div>
         </div>
-      </>
+      </section>
     )
   );
 };

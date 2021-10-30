@@ -39,11 +39,12 @@ const CategoryList = () => {
   return (
     <>
       <section className="category-wrapper w-1/2 md:w-full pt-10 pb-16">
-        <div className="max-w-7xl mx-auto md:masonry-col-2  before:box-inherit after:box-inherit">
-          {isLoading && <CategorySkeleton show={isLoading} />}
+        {/* <div className="max-w-7xl mx-auto md:masonry-col-2  before:box-inherit after:box-inherit"> */}
+        {isLoading && <CategorySkeleton show={isLoading} />}
 
-          {!isLoading &&
-            categories.map(({ id, ...restProps }, index) => (
+        {!isLoading && (
+          <div className="max-w-7xl mx-auto md:masonry-col-2  before:box-inherit after:box-inherit">
+            {categories.map(({ id, ...restProps }, index) => (
               <div key={id} className="mb-8 break-inside mt-12">
                 <CategoryListItem
                   ref={(element) => (listRef.current[index] = element)}
@@ -52,7 +53,9 @@ const CategoryList = () => {
                 />
               </div>
             ))}
-        </div>
+          </div>
+        )}
+        {/* </div> */}
       </section>
     </>
   );

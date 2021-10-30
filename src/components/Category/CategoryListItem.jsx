@@ -9,7 +9,6 @@ const CategoryListItem = React.forwardRef((props, ref) => {
     <Link
       ref={ref}
       to={`/collections/${pathName}`}
-      // to={`${url}/collections/${pathName}`}
       className={clxs("relative", "category-card relative w-5/12")}
     >
       <img className="z-0 w-full" src={imageUrl} alt={title} />
