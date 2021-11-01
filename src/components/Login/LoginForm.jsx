@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { auth, signInWithGoogle } from "../../firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-// import { useDispatch } from "react-redux";
+import { pathToSignup } from "../../router";
 
-// import { userActions } from "../../store/user-slice";
 import { FormLabel, FormInput } from "../Form/FormLabelAndInput";
 import FormButton from "../Form/FormButton";
 
@@ -13,8 +12,6 @@ import FormButton from "../Form/FormButton";
 
 const LoginForm = ({ onResetPasswordHandler }) => {
   const history = useHistory();
-  // const dispatch = useDispatch();
-  // const [isSubmit, setIsSubmit] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
@@ -30,16 +27,6 @@ const LoginForm = ({ onResetPasswordHandler }) => {
         passwordInput,
       );
 
-      // const { displayName, email, photoURL, uid } = userCredential.user;
-
-      // dispatch(
-      //   userActions.setCurrentUser({
-      //     displayName,
-      //     email,
-      //     photoURL,
-      //     id: uid,
-      //   }),
-      // );
       setIsSubmit(false);
       setEmailInput("");
       setPasswordInput("");
@@ -87,7 +74,7 @@ const LoginForm = ({ onResetPasswordHandler }) => {
         </FormButton>
       </fieldset>
       <div className="mt-10 flex space-x-5 text-sm tracking-wide">
-        <Link to="/signup" className="hover:text-lightOrange-800">
+        <Link to={pathToSignup} className="hover:text-lightOrange-800">
           Create account
         </Link>
         <button type="button" onClick={onResetPasswordHandler}>

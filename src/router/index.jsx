@@ -12,6 +12,12 @@ import PageNotFound from "../pages/PageNotFound";
 import CollectionProducts from "../pages/CollectionProducts";
 import ProtectedRoute from "./ProtectedRoute";
 
+export const pathToHome = "/";
+export const pathToLogin = "/login";
+export const pathToSignup = "/signup";
+export const pathToCheckout = "/checkout";
+export const pathToAccount = "/account";
+
 const Routes = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
 
@@ -19,14 +25,14 @@ const Routes = () => {
     <Switch>
       <ProtectedRoute
         isAuth={currentUser}
-        path="/account"
+        path={pathToAccount}
         component={Account}
       />
 
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
+      <Route path={pathToLogin} component={Login} />
+      <Route path={pathToSignup} component={Signup} />
+      <Route path={pathToCheckout} component={Checkout} />
       <Route path="/notfound" component={PageNotFound} />
-      <Route path="/checkout" component={Checkout} />
       <Route path="/collections/:pathName" component={CollectionProducts} />
       <Route path="/products/:slug" component={Product} />
       <Route exact path="/" component={Home} />
