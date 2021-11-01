@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../store/cart-slice";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
@@ -15,6 +15,7 @@ import ProductGallery from "../components/Product/ProductGallery";
 
 const Product = () => {
   const { slug } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
@@ -109,7 +110,10 @@ const Product = () => {
                 Add to Cart
               </button>
 
-              <button className="h-14 w-full bg-lightOrange-800">
+              <button
+                onClick={() => history.push("/checkout")}
+                className="h-14 w-full bg-lightOrange-800"
+              >
                 Buy it Now
               </button>
             </div>

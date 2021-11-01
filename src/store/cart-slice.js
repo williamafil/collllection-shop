@@ -13,6 +13,7 @@ const cartSlice = createSlice({
     cartItems: [],
     totalQuantity: 0,
     subTotal: 0,
+    shipping: 10,
   },
   reducers: {
     toggle: (state) => {
