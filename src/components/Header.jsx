@@ -5,8 +5,17 @@ import { cartActions } from "../store/cart-slice";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebase";
 import { ReactComponent as BagIcon } from "../images/bag.svg";
+import HeaderLogo from "./Header/HeaderLogo";
+import {
+  pathToHome,
+  pathToCheckout,
+  pathToLogin,
+  pathToAccount,
+} from "../router";
 import clxs from "../utils/clxs";
 import style from "./Header.module.css";
+
+// TODO: Shop link, More link, Search toggle
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -20,10 +29,10 @@ const Header = () => {
 
   return (
     <>
-      {pathname !== "/checkout" ? (
+      {pathname !== pathToCheckout ? (
         <div
           className={
-            pathname === "/checkout" ? "bg-white" : "bg-lightOrange-50"
+            pathname === pathToCheckout ? "bg-white" : "bg-lightOrange-50"
           }
         >
           <header className={clxs("container mx-auto py-10 px-5")}>
@@ -37,19 +46,23 @@ const Header = () => {
                 <div className="hidden lg:block w-full">
                   <ul className="flex space-x-8">
                     <li>
-                      <a className={style.header__link_item} href="#">
+                      <Link
+                        to={pathToHome}
+                        className={style.header__link_item}
+                        href="#"
+                      >
                         MAIN
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a className={style.header__link_item} href="#">
+                      <Link to="/" className={style.header__link_item} href="#">
                         SHOP
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a className={style.header__link_item} href="#">
+                      <Link to="/" className={style.header__link_item} href="#">
                         More
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -61,16 +74,7 @@ const Header = () => {
                   pathname !== "/checkout" ? "w-1/3" : "w-full",
                 )}
               >
-                <Link to="/" className="h-full w-full">
-                  <div className="w-full text-center">
-                    <h1 className="uppercase text-3xl md:text-4xl lg:text-5xl leading-5">
-                      collllect
-                    </h1>
-                    <h2 className="w-full text-2xs md:text-xs lg:text-sm">
-                      Mine & Yours
-                    </h2>
-                  </div>
-                </Link>
+                <HeaderLogo />
               </div>
 
               <div className="right-nav w-full">
@@ -89,7 +93,7 @@ const Header = () => {
                           </li>
                           <li>
                             <Link
-                              to="/account"
+                              to={pathToAccount}
                               className={style.header__link_item}
                             >
                               Account
@@ -99,9 +103,8 @@ const Header = () => {
                       ) : (
                         <li>
                           <Link
-                            to="/login"
+                            to={pathToLogin}
                             className={style.header__link_item}
-                            href="#"
                           >
                             Log In
                           </Link>
@@ -109,17 +112,20 @@ const Header = () => {
                       )}
 
                       <li>
-                        <a className={style.header__link_item} href="#">
+                        <Link className={style.header__link_item} to="/">
                           Search
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
                   <div
                     onClick={cartToggleHandler}
-                    className={`${style.header__link_item} flex justify-end items-center pb-0.5`}
+                    className={clxs(
+                      "pb-0.5 cursor-pointer",
+                      "flex justify-center items-center ",
+                    )}
                   >
-                    <BagIcon className="w-7" />
+                    <BagIcon className="h-7 my-auto" />
                     <span className="ml-1 text-base">{numberOfCartItems}</span>
                   </div>
                 </div>

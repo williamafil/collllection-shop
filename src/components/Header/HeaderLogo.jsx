@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { pathToHome } from "../../router";
 
 const HeaderLogo = () => {
   return (
-    <Link to="/" className="h-full w-full">
+    <Link to={pathToHome} className="h-full w-full">
       <div className="w-full text-center">
         <h1 className="uppercase text-3xl md:text-4xl lg:text-5xl leading-5">
           collllect
