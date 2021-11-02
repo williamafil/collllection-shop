@@ -17,7 +17,7 @@ const OverlayElement = () => {
       {overlayComponent === "info" && <InfoOverlay />}
       {overlayComponent === "mobileNav" && <MobileNavOverlay />}
       {overlayComponent === "search" && <SearchOverlay />}
-      {overlayComponent === "shopNav" && <ShopMenuOverlay />}
+      {overlayComponent === "shopMenu" && <ShopMenuOverlay />}
     </OverlayWrapper>
   );
 };

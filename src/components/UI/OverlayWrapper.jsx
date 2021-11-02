@@ -20,7 +20,8 @@ const OverlayWrapper = ({ children }) => {
     <section
       className={clxs(
         "pb-10",
-        " bg-lightOrange-50 z-30",
+        "bg-gray-50 z-30",
+        // "bg-lightOrange-50 z-30",
         "w-full min-h-screen text-lightOrange-800 ",
       )}
     >
