@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-const CollectionProducts = () => {
-  const { pathName } = useParams();
+const CollectionProducts = (props) => {
+  const pathName = props.match.params.pathName;
   const [products, setProducts] = useState([]);
 
   useEffect(async () => {
