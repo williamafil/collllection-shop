@@ -15,6 +15,7 @@ import logger from "redux-logger";
 import categoryReducer from "./category-slice";
 import userReducer from "./user-slice";
 import cartReducer from "./cart-slice";
+import uiReducer from "./ui-slice";
 
 const persistConfig = {
   key: "root",
@@ -24,6 +25,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  ui: uiReducer,
   user: userReducer,
   category: categoryReducer,
   cart: cartReducer,

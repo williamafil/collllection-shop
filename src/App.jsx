@@ -10,13 +10,16 @@ import { userActions } from "./store/user-slice";
 import Routes from "./router";
 
 import Cart from "./components/Cart/Cart";
+
 import Alert from "./components/Alert";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import Overlay from "./components/UI/Overlay";
 
 function App() {
   const dispatch = useDispatch();
   const isCartShown = useSelector((state) => state.cart.isCartShown);
+  const isOverlayShown = useSelector((state) => state.ui.isOverlayShown);
 
   useEffect(() => {
     const unsubscribeOnAuthState = onAuthStateChanged(
@@ -49,7 +52,8 @@ function App() {
   return (
     <>
       {isCartShown && <Cart />}
-      <div className={isCartShown ? "hidden" : "block"}>
+      {isOverlayShown && <Overlay />}
+      <div className={isOverlayShown ? "hidden" : "block"}>
         {/* <Alert /> */}
         <Header />
         <Routes />

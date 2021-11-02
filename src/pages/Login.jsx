@@ -11,7 +11,7 @@ const Login = () => {
   const cancelHandler = () => setIsLogin(true);
 
   return (
-    <section className="Login py-28">
+    <section className="Login py-16">
       <LoginSignupWrapper sectionTitle="Login">
         {isLogin ? (
           <LoginForm onResetPasswordHandler={resetHandler} />

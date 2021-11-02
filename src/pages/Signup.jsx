@@ -69,7 +69,7 @@ const Signup = () => {
   };
 
   return (
-    <section className="Signup py-28">
+    <section className="Signup py-16">
       <LoginSignupWrapper sectionTitle="Create Account">
         <form onSubmit={onSubmitHandler}>
           <fieldset className="mt-5 lg:mt-0">

@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "../store/cart-slice";
+import { uiActions } from "../store/ui-slice";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebase";
 import { ReactComponent as BagIcon } from "../images/bag.svg";
@@ -22,9 +23,22 @@ const Header = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const numberOfCartItems = useSelector((state) => state.cart.totalQuantity);
+  const isOverlayShown = useSelector((state) => state.ui.isOverlayShown);
 
   const cartToggleHandler = () => {
     dispatch(cartActions.toggle());
+  };
+
+  const showMobileNavHandler = () => {
+    dispatch(uiActions.showOverlay("mobileNav"));
+  };
+
+  const showCartHandler = () => {
+    if (isOverlayShown) {
+      dispatch(uiActions.switchOverlayComponent("cart"));
+    } else {
+      dispatch(uiActions.showOverlay("cart"));
+    }
   };
 
   return (
@@ -35,13 +49,45 @@ const Header = () => {
             pathname === pathToCheckout ? "bg-white" : "bg-lightOrange-50"
           }
         >
-          <header className={clxs("container mx-auto py-10 px-5")}>
+          <header
+            className={clxs(
+              "container mx-auto py-20 px-5",
+              isOverlayShown ? "hidden lg:block" : "block",
+            )}
+          >
             <nav className="w-full flex justify-between items-center">
               <div className="left-nav w-full">
-                <div className="lg:hidden hamburger-icon w-8 h-8 p-1 flex flex-col justify-around cursor-pointer">
-                  <span className="w-full h-1 block border-b border-dark"></span>
-                  <span className="w-full h-1 block border-b border-dark"></span>
-                  <span className="w-full h-1 block border-b border-dark"></span>
+                <div
+                  onClick={showMobileNavHandler}
+                  className={clxs(
+                    "hamburger-icon lg:hidden w-8 h-8 p-1 cursor-pointer",
+                    "flex flex-col justify-around",
+                  )}
+                >
+                  <span
+                    className={clxs(
+                      "w-full h-1 block border-b ",
+                      isOverlayShown
+                        ? " border-lightOrange-800"
+                        : "border-dark",
+                    )}
+                  ></span>
+                  <span
+                    className={clxs(
+                      "w-full h-1 block border-b ",
+                      isOverlayShown
+                        ? " border-lightOrange-800"
+                        : "border-dark",
+                    )}
+                  ></span>
+                  <span
+                    className={clxs(
+                      "w-full h-1 block border-b ",
+                      isOverlayShown
+                        ? " border-lightOrange-800"
+                        : "border-dark",
+                    )}
+                  ></span>
                 </div>
                 <div className="hidden lg:block w-full">
                   <ul className="flex space-x-8">
@@ -55,12 +101,12 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/" className={style.header__link_item} href="#">
+                      <Link to="/" className={style.header__link_item}>
                         SHOP
                       </Link>
                     </li>
                     <li>
-                      <Link to="/" className={style.header__link_item} href="#">
+                      <Link to="/" className={style.header__link_item}>
                         More
                       </Link>
                     </li>
@@ -71,6 +117,7 @@ const Header = () => {
               <div
                 className={clxs(
                   "min-w-min",
+                  isOverlayShown ? "invisible" : "visible",
                   pathname !== "/checkout" ? "w-1/3" : "w-full",
                 )}
               >
@@ -119,7 +166,7 @@ const Header = () => {
                     </ul>
                   </div>
                   <div
-                    onClick={cartToggleHandler}
+                    onClick={showCartHandler}
                     className={clxs(
                       "pb-0.5 cursor-pointer",
                       "flex justify-center items-center ",
