@@ -7,14 +7,12 @@ import { pathToSignup } from "../../router";
 import { FormLabel, FormInput } from "../Form/FormLabelAndInput";
 import FormButton from "../Form/FormButton";
 
-// TODO: Form validation
-// TODO: Error message
-
 const LoginForm = ({ onResetPasswordHandler }) => {
   const history = useHistory();
   const [isSubmit, setIsSubmit] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -33,7 +31,17 @@ const LoginForm = ({ onResetPasswordHandler }) => {
 
       history.push("/");
     } catch (error) {
-      console.error("LOG IN ERROR ", error);
+      const { code, message } = error;
+      setIsSubmit(false);
+
+      switch (code) {
+        case "auth/user-not-found":
+        case "auth/wrong-password":
+          setErrorMsg("Incorrect email or password.");
+          break;
+        default:
+          setErrorMsg(message);
+      }
     }
   };
 
@@ -44,44 +52,48 @@ const LoginForm = ({ onResetPasswordHandler }) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <fieldset className="mt-5 lg:mt-0">
-        <FormLabel label="Email" htmlFor="email" />
-        <FormInput
-          inputHandler={onInputHandler}
-          id="email"
-          type="email"
-          value={emailInput}
-          placeholder="Email"
-          required
-        />
-      </fieldset>
-      <fieldset className="mt-5">
-        <FormLabel label="Password" htmlFor="password" />
-        <FormInput
-          inputHandler={onInputHandler}
-          id="password"
-          type="password"
-          value={passwordInput}
-          placeholder="Password"
-          required
-        />
-      </fieldset>
-      <fieldset className="mt-5">
-        <FormButton disabled={isSubmit}>Sign In</FormButton>
-        <FormButton onClickHandler={signInWithGoogle} isGoogle>
-          Sign In with Google
-        </FormButton>
-      </fieldset>
-      <div className="mt-10 flex space-x-5 text-sm tracking-wide">
-        <Link to={pathToSignup} className="hover:text-lightOrange-800">
-          Create account
-        </Link>
-        <button type="button" onClick={onResetPasswordHandler}>
-          Forgot your password?
-        </button>
-      </div>
-    </form>
+    <>
+      {errorMsg && <div className="p-2.5 bg-lightOrange-800">{errorMsg}</div>}
+
+      <form onSubmit={submitHandler}>
+        <fieldset className="mt-5 lg:mt-0">
+          <FormLabel label="Email" htmlFor="email" />
+          <FormInput
+            inputHandler={onInputHandler}
+            id="email"
+            type="email"
+            value={emailInput}
+            placeholder="Email"
+            required
+          />
+        </fieldset>
+        <fieldset className="mt-5">
+          <FormLabel label="Password" htmlFor="password" />
+          <FormInput
+            inputHandler={onInputHandler}
+            id="password"
+            type="password"
+            value={passwordInput}
+            placeholder="Password"
+            required
+          />
+        </fieldset>
+        <fieldset className="mt-5">
+          <FormButton disabled={isSubmit}>Sign In</FormButton>
+          <FormButton onClickHandler={signInWithGoogle} isGoogle>
+            Sign In with Google
+          </FormButton>
+        </fieldset>
+        <div className="mt-10 flex space-x-5 text-sm tracking-wide">
+          <Link to={pathToSignup} className="hover:text-lightOrange-800">
+            Create account
+          </Link>
+          <button type="button" onClick={onResetPasswordHandler}>
+            Forgot your password?
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

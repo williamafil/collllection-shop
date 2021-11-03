@@ -7,10 +7,6 @@ import FormButton from "../components/Form/FormButton";
 import { FormLabel, FormInput } from "../components/Form/FormLabelAndInput";
 import LoginSignupWrapper from "../components/UI/LoginSignupWrapper";
 
-// TODO: Show loading icon when submit
-// TODO: Form validation
-// TODO: Error message
-
 const Signup = () => {
   const history = useHistory();
 
@@ -20,11 +16,30 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMsgs, setErrorMsgs] = useState([]);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    if (password !== confirmPassword) return;
+    setErrorMsgs([]);
+    let isError = false;
     setIsSubmit(true);
+
+    if (password !== confirmPassword) {
+      setErrorMsgs((prev) => [...prev, "Please confirm your password."]);
+      isError = true;
+    }
+    if (email.trim() === "") {
+      setErrorMsgs((prev) => [...prev, "Email can't be blank."]);
+      isError = true;
+    }
+    if (password.trim() === "") {
+      setErrorMsgs((prev) => [...prev, "Password can't be blank."]);
+      isError = true;
+    }
+    if (isError) {
+      setIsSubmit(false);
+      return;
+    }
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -49,13 +64,23 @@ const Signup = () => {
         });
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(
-          "🐙 SIGNUP ERROR",
-          `Code: ${errorCode}, `,
-          `Message: ${errorMessage}`,
-        );
+        const { code, message } = error;
+
+        switch (code) {
+          case "auth/email-already-in-use":
+            setErrorMsgs((prev) => [...prev, "Email already in use."]);
+            break;
+          case "auth/weak-password":
+            setErrorMsgs((prev) => [
+              ...prev,
+              "Password should be at least 6 characters.",
+            ]);
+            break;
+          default:
+            setErrorMsg(message);
+        }
+
+        setIsSubmit(false);
       });
   };
 
@@ -71,6 +96,13 @@ const Signup = () => {
   return (
     <section className="Signup py-16">
       <LoginSignupWrapper sectionTitle="Create Account">
+        {errorMsgs.length !== 0 && (
+          <ul className="p-2.5 bg-lightOrange-800">
+            {errorMsgs.map((error) => (
+              <li>{error}</li>
+            ))}
+          </ul>
+        )}
         <form onSubmit={onSubmitHandler}>
           <fieldset className="mt-5 lg:mt-0">
             <FormLabel label="First Name" htmlFor="first-name" />
@@ -80,7 +112,6 @@ const Signup = () => {
               type="text"
               value={firstName}
               placeholder="First Name"
-              required
             />
           </fieldset>
           <fieldset className="mt-5">
@@ -91,7 +122,6 @@ const Signup = () => {
               type="text"
               value={lastName}
               placeholder="Last Name"
-              required
             />
           </fieldset>
           <fieldset className="mt-5 lg:mt-0">
@@ -102,7 +132,6 @@ const Signup = () => {
               type="email"
               value={email}
               placeholder="Email"
-              required
             />
           </fieldset>
           <fieldset className="mt-5">
@@ -113,7 +142,6 @@ const Signup = () => {
               type="password"
               value={password}
               placeholder="Password"
-              required
             />
           </fieldset>
           <fieldset className="mt-5">
@@ -124,7 +152,6 @@ const Signup = () => {
               type="password"
               value={confirmPassword}
               placeholder="Confirm Password"
-              required
             />
           </fieldset>
           <fieldset className="mt-5">

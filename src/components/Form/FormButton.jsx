@@ -18,7 +18,8 @@ const FormButton = (props) => {
       disabled={disabled}
     >
       <span className="h-full flex justify-center items-center">
-        {children} {disabled && <LoadingIcon />}
+        {disabled ? <LoadingIcon /> : children}
+        {/* {disabled && <LoadingIcon />} */}
       </span>
     </button>
   );
