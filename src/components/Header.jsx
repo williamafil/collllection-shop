@@ -41,13 +41,13 @@ const Header = () => {
     }
   };
 
+  const isAtOverlayOrCheckout = pathname === pathToCheckout || isOverlayShown;
+
   return (
     <>
       {pathname !== pathToCheckout ? (
         <div
-          className={
-            pathname === pathToCheckout ? "bg-white" : "bg-lightOrange-50"
-          }
+          className={isAtOverlayOrCheckout ? "bg-gray-50" : "bg-lightOrange-50"}
         >
           <header
             className={clxs(

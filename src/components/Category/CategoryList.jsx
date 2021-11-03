@@ -31,7 +31,7 @@ const CategoryList = () => {
       setIsLoading(false);
     }
 
-    tl.from(listRef.current, 8, { autoAlpha: 0, delay: 0.6, stagger: 3 });
+    tl.from(listRef.current, 1, { autoAlpha: 0, delay: 0.7, stagger: 0.7 });
   }, []);
 
   return (
