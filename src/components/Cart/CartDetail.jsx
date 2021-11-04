@@ -1,11 +1,21 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import CartItem from "./CartItem";
+import { uiActions } from "../../store/ui-slice";
 import clxs from "../../utils/clxs";
+import { pathToCheckout } from "../../router";
 
 const CartDetail = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const subTotal = useSelector((state) => state.cart.subTotal);
+
+  const redirectPageHandler = (path) => {
+    history.push(path);
+    dispatch(uiActions.closeOverlay());
+  };
 
   return (
     <>
@@ -56,7 +66,10 @@ const CartDetail = () => {
             Shipping & taxes calculated at checkout
           </p>
 
-          <button className="mt-3 py-3 w-full bg-lightOrange-800 text-lg tracking-wider text-white text-center">
+          <button
+            onClick={() => redirectPageHandler(pathToCheckout)}
+            className="mt-3 py-3 w-full bg-lightOrange-800 text-lg tracking-wider text-white text-center"
+          >
             Check Out
           </button>
         </main>

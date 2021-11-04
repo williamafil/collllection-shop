@@ -8,6 +8,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { ReactComponent as MinusIcon } from "../images/minus.svg";
 import { ReactComponent as PlusIcon } from "../images/plus.svg";
 import ProductGallery from "../components/Product/ProductGallery";
+import { pathToCheckout } from "../router";
 
 // TODO:
 // 1. Add product to redux store
@@ -111,7 +112,7 @@ const Product = () => {
               </button>
 
               <button
-                onClick={() => history.push("/checkout")}
+                onClick={() => history.push(pathToCheckout)}
                 className="h-14 w-full bg-lightOrange-800"
               >
                 Buy it Now
@@ -119,17 +120,7 @@ const Product = () => {
             </div>
 
             <article className="description space-y-2">
-              <p>You & Me card</p>
-              <p>Left blank inside for your personal message.</p>
-              <p>
-                A6 printed on 350gsm card Designed by Dowse and printed in
-                Brighton UK.
-              </p>
-              <p>
-                If you're sending a gift and would like a personal message
-                written in the card and free gift wrapping please let us know in
-                your order comments box.
-              </p>
+              <p>{product.description}</p>
             </article>
           </div>
         </main>
