@@ -10,6 +10,7 @@ import Product from "../pages/Product";
 import Checkout from "../pages/Checkout";
 import PageNotFound from "../pages/PageNotFound";
 import CollectionProducts from "../pages/CollectionProducts";
+import Payment from "../pages/Payment";
 import ProtectedRoute from "./ProtectedRoute";
 
 export const pathToHome = "/";
@@ -32,6 +33,7 @@ const Routes = () => {
       <Route path={pathToLogin} component={Login} />
       <Route path={pathToSignup} component={Signup} />
       <Route path={pathToCheckout} component={Checkout} />
+      <Route path="/payment/:orderId" component={Payment} />
       <Route path="/notfound" component={PageNotFound} />
       <Route path="/collections/:pathName" component={CollectionProducts} />
       <Route path="/products/:slug" component={Product} />

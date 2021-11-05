@@ -10,10 +10,6 @@ import { ReactComponent as PlusIcon } from "../images/plus.svg";
 import ProductGallery from "../components/Product/ProductGallery";
 import { pathToCheckout } from "../router";
 
-// TODO:
-// 1. Add product to redux store
-// 2. Keep cart items persistent
-
 const Product = () => {
   const { slug } = useParams();
   const history = useHistory();

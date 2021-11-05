@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { db } from "../firebase/firebase";
+import { collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import { useHistory } from "react-router";
+
+import FormButton from "../components/Form/FormButton";
 import HeaderLogo from "../components/Header/HeaderLogo";
 import { ReactComponent as NavArrowRight } from "../images/nav-arrow-right.svg";
+import { ReactComponent as AvatarIcon } from "../images/avatar.svg";
 import clxs from "../utils/clxs";
 
 const Checkout = () => {
+  const history = useHistory();
+  const currentUser = useSelector((state) => state.user.currentUser);
   const cartSubtotal = useSelector((state) => state.cart.subTotal);
   const cartShipping = useSelector((state) => state.cart.shipping);
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -26,6 +34,10 @@ const Checkout = () => {
   ]);
 
   const [tax, setTax] = useState(null);
+  const [cartTotal, setCartTotal] = useState(null);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -33,19 +45,143 @@ const Checkout = () => {
   const [province, setProvince] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [phone, setPhone] = useState("");
-  const [cartTotal, setCartTotal] = useState(null);
+  const [errorMsgs, setErrorMsgs] = useState([]);
 
   const selectProvinceHandler = (event) => {
     const value = event.target.value;
     const selectedProvince = provinces.find((item) => item.value === value);
     setProvince(event.target.value);
-    console.log("selectedProvince.rate", selectedProvince.rate);
-    const calcTax = (cartSubtotal + cartShipping) * selectedProvince.rate;
-    console.log("tax", calcTax);
-    setTax(calcTax);
 
-    const calcTotal = cartSubtotal + cartShipping + calcTax;
-    setCartTotal(calcTotal);
+    const calcTax = (
+      (cartSubtotal + cartShipping) *
+      selectedProvince.rate
+    ).toFixed(2);
+
+    setTax(parseFloat(calcTax));
+
+    const calcTotal = (
+      cartSubtotal +
+      cartShipping +
+      parseFloat(calcTax)
+    ).toFixed(2);
+
+    setCartTotal(parseFloat(calcTotal));
+  };
+
+  // check if user is logged in
+  useEffect(() => {
+    if (currentUser) {
+      setUserId(currentUser.id);
+      setEmail(currentUser.email);
+      setFirstName(currentUser.firstName);
+      setLastName(currentUser.lastName);
+    }
+  }, [currentUser]);
+
+  const onSubmitHandler = async (event) => {
+    // TODO:
+    // 1. blank field check
+    // 2. write data to firestore, create a new order record
+
+    // {
+    //    shipping: {
+    //      user_id: '',
+    //      firstName,
+    //      lastName,
+    //      address,
+    //      city,
+    //      province,
+    //      postalCode,
+    //      phone,
+    //    },
+    //    items: [],
+    //    subtotal: 123,
+    //    freight: 10,
+    //    tax: 23,
+    //    total: 156
+    //    isPaid: false
+    //    createdAt: timestamp
+    //    paidAt: timestamp
+    // }
+
+    // 3. get order id
+    // 4. redirect to /checkout/:order_id       /checkout/sEda7DE96aed2d3
+    console.log("submit");
+    event.preventDefault();
+    setErrorMsgs([]);
+    let isError = false;
+    setIsSubmit(true);
+
+    if (email.trim() === "") {
+      setErrorMsgs((prev) => [...prev, "Email can't be blank."]);
+      isError = true;
+    }
+    if (firstName.trim() === "") {
+      setErrorMsgs((prev) => [...prev, "First name can't be blank."]);
+      isError = true;
+    }
+    if (!lastName.trim()) {
+      setErrorMsgs((prev) => [...prev, "Last name can't be blank."]);
+      isError = true;
+    }
+    if (!address.trim()) {
+      setErrorMsgs((prev) => [...prev, "Address can't be blank."]);
+      isError = true;
+    }
+    if (!city.trim()) {
+      setErrorMsgs((prev) => [...prev, "City can't be blank."]);
+      isError = true;
+    }
+    if (!province.trim()) {
+      setErrorMsgs((prev) => [...prev, "Province can't be blank."]);
+      isError = true;
+    }
+    if (!postalCode.trim()) {
+      setErrorMsgs((prev) => [...prev, "Postal code can't be blank."]);
+      isError = true;
+    }
+    if (!phone.trim()) {
+      setErrorMsgs((prev) => [...prev, "Phone number can't be blank."]);
+      isError = true;
+    }
+
+    if (isError) {
+      setIsSubmit(false);
+      return;
+    }
+
+    try {
+      const docData = {
+        shipping: {
+          userId: userId,
+          firstName,
+          lastName,
+          address,
+          city,
+          province,
+          postalCode,
+          phone,
+        },
+        items: [...cartItems],
+        subtotal: cartSubtotal,
+        freight: cartShipping,
+        tax: tax,
+        total: cartTotal,
+        isPaid: false,
+        createdAt: Timestamp.now(),
+        paidAt: "",
+      };
+
+      const docRef = await doc(collection(db, "orders"));
+      await setDoc(docRef, docData);
+
+      setIsSubmit(false);
+      console.log("path: ", `/payment/${docRef.id}`);
+      history.push(`/payment/${docRef.id}`);
+    } catch (error) {
+      console.error("ERROR CREATING ORDER: ", error);
+      setIsSubmit(false);
+    }
   };
 
   return (
@@ -174,14 +310,64 @@ const Checkout = () => {
             </ul>
           </section>
 
+          {errorMsgs.length !== 0 && (
+            <ul className="p-2.5 bg-lightOrange-800">
+              {errorMsgs.map((error, index) => (
+                <li key={`error-${index}`}>{error}</li>
+              ))}
+            </ul>
+          )}
+
+          <h2 className="my-2 pb-1">Contact Information</h2>
+          {currentUser ? (
+            <div className="mb-6 flex space-x-4">
+              <div>
+                <div className="w-12 h-12 rounded-md bg-gray-200 flex justify-center items-center">
+                  <AvatarIcon className="w-10 h-10 text-gray-400" />
+                </div>
+              </div>
+              <div>
+                <h3>
+                  <b>
+                    {firstName} {lastName}
+                  </b>{" "}
+                  ({email})
+                </h3>
+                <span className="text-sm">Log out</span>
+              </div>
+            </div>
+          ) : (
+            <form className="mb-4 space-y-3 text-sm tracking-wide">
+              <legend className="w-full">
+                <label htmlFor="email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="E-mail address (for order notification)"
+                  className="w-full p-3 rounded-md border border-gray-200 drop-shadow-sm"
+                  onInput={() => setEmail(event.target.value)}
+                  value={email}
+                />
+              </legend>
+            </form>
+          )}
+
           <h2 className="my-2 pb-1">Shipping Information</h2>
-          <form className="space-y-3 text-sm tracking-wide">
+          <form
+            onSubmit={onSubmitHandler}
+            className="mb-4 space-y-3 text-sm tracking-wide"
+          >
             <div className="space-y-3 lg:space-y-0 lg:space-x-3 flex flex-col lg:flex-row">
               <legend className="w-full">
                 <input
                   type="text"
                   placeholder="First Name"
                   className="w-full p-3 rounded-md border border-gray-200 drop-shadow-sm"
+                  onInput={() => setFirstName(event.target.value)}
+                  defaultValue={firstName}
                 />
               </legend>
 
@@ -190,6 +376,8 @@ const Checkout = () => {
                   type="text"
                   placeholder="Last Name"
                   className="w-full p-3 rounded-md border border-gray-200 drop-shadow-sm"
+                  onInput={() => setLastName(event.target.value)}
+                  defaultValue={lastName}
                 />
               </legend>
             </div>
@@ -198,6 +386,8 @@ const Checkout = () => {
                 type="text"
                 placeholder="Address"
                 className="w-full p-3 rounded-md border border-gray-200 drop-shadow-sm"
+                onInput={() => setAddress(event.target.value)}
+                value={address}
               />
             </legend>
             <legend className="w-full">
@@ -205,6 +395,8 @@ const Checkout = () => {
                 type="text"
                 placeholder="City"
                 className="w-full p-3 rounded-md border border-gray-200 drop-shadow-sm"
+                onInput={() => setCity(event.target.value)}
+                value={city}
               />
             </legend>
             <div className="space-y-3 lg:space-y-0 lg:space-x-3 flex flex-col lg:flex-row">
@@ -229,6 +421,8 @@ const Checkout = () => {
                   type="text"
                   placeholder="Postal Code"
                   className="w-full p-3 rounded-md border border-gray-200 drop-shadow-sm"
+                  onInput={() => setPostalCode(event.target.value)}
+                  value={postalCode}
                 />
               </legend>
             </div>
@@ -238,11 +432,19 @@ const Checkout = () => {
                 type="text"
                 placeholder="Phone"
                 className="w-full p-3 rounded-md border border-gray-200 drop-shadow-sm"
+                onInput={() => setPhone(event.target.value)}
+                value={phone}
               />
             </legend>
-            <button className="w-full bg-lightOrange-800 py-4 rounded-md text-sm tracking-wide hover:bg-black hover:text-white">
+            <FormButton
+              className="w-full bg-lightOrange-800 py-4 rounded-md text-sm tracking-wide hover:bg-black hover:text-white"
+              disabled={isSubmit}
+            >
               Continue to payment
-            </button>
+            </FormButton>
+            {/* <button className="w-full bg-lightOrange-800 py-4 rounded-md text-sm tracking-wide hover:bg-black hover:text-white">
+              Continue to payment
+            </button> */}
           </form>
 
           <footer className="mb-8">
