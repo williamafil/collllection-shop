@@ -329,7 +329,7 @@ const Checkout = () => {
               <div>
                 <h3>
                   <b>
-                    {firstName} {lastName}
+                    {currentUser.firstName} {currentUser.lastName}
                   </b>{" "}
                   ({email})
                 </h3>

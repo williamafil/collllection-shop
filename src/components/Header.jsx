@@ -60,7 +60,8 @@ const Header = () => {
                 <div
                   onClick={showMobileNavHandler}
                   className={clxs(
-                    "hamburger-icon lg:hidden w-8 h-8 p-1 cursor-pointer",
+                    "hamburger-icon",
+                    "mb-0.5 lg:hidden w-8 h-7 p-1 cursor-pointer",
                     "flex flex-col justify-around",
                   )}
                 >
@@ -168,7 +169,7 @@ const Header = () => {
                   <div
                     onClick={showCartHandler}
                     className={clxs(
-                      "pb-0.5 cursor-pointer",
+                      "cursor-pointer",
                       "flex justify-center items-center ",
                     )}
                   >

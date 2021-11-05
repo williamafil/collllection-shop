@@ -3,27 +3,64 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase";
 import { uiActions } from "../../store/ui-slice";
-import { pathToLogin, pathToSignup } from "../../router";
-import { current } from "immer";
+import { pathToAccount, pathToLogin, pathToSignup } from "../../router";
 
 const MobileNavOverlay = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const loginHandler = () => {
-    history.push(pathToLogin);
-    dispatch(uiActions.closeOverlay());
-  };
-
-  const signupHandler = () => {
-    history.push(pathToSignup);
+  const redirectPageHandler = (path) => {
+    history.push(path);
     dispatch(uiActions.closeOverlay());
   };
 
   const switchOverlayComponentHandler = (componentName) => {
     dispatch(uiActions.switchOverlayComponent(componentName));
   };
+
+  const notLoggedIn = () => (
+    <ul className="mt-28 space-y-4 tracking-wide">
+      <li>
+        <span
+          onClick={() => redirectPageHandler(pathToLogin)}
+          className="py-1 pr-2 cursor-pointer"
+        >
+          Log in
+        </span>
+      </li>
+      <li
+        onClick={() => redirectPageHandler(pathToSignup)}
+        className="py-1 pr-2 cursor-pointer"
+      >
+        Create account
+      </li>
+    </ul>
+  );
+
+  const userIsLoggedIn = () => (
+    <ul className="mt-28 space-y-4 tracking-wide">
+      {currentUser.firstName !== "" && (
+        <li>
+          <span
+            onClick={() => redirectPageHandler(pathToAccount)}
+            className="py-1 pr-2 cursor-pointer"
+          >
+            Logged in as {currentUser.firstName}
+          </span>
+        </li>
+      )}
+
+      <li>
+        <span
+          onClick={() => auth.signOut()}
+          className="py-1 pr-2 cursor-pointer"
+        >
+          Log out
+        </span>
+      </li>
+    </ul>
+  );
 
   return (
     <div>
@@ -40,37 +77,7 @@ const MobileNavOverlay = () => {
           </span>
         </li>
       </ul>
-      {!currentUser ? (
-        <ul className="mt-28 space-y-4 tracking-wide">
-          <li>
-            <span onClick={loginHandler} className="py-1 pr-2 cursor-pointer">
-              Log in
-            </span>
-          </li>
-          <li onClick={signupHandler} className="py-1 pr-2 cursor-pointer">
-            Create account
-          </li>
-        </ul>
-      ) : (
-        <ul className="mt-28 space-y-4 tracking-wide">
-          {currentUser.firstName !== "" && (
-            <li>
-              <span className="py-1 pr-2">
-                Logged in as {currentUser.firstName}
-              </span>
-            </li>
-          )}
-
-          <li>
-            <span
-              onClick={() => auth.signOut()}
-              className="py-1 pr-2 cursor-pointer"
-            >
-              Log out
-            </span>
-          </li>
-        </ul>
-      )}
+      {!currentUser ? notLoggedIn() : userIsLoggedIn()}
     </div>
   );
 };
