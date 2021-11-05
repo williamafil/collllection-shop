@@ -18,7 +18,7 @@ const CollectionProducts = (props) => {
       };
     });
     setProducts(productsData);
-  }, []);
+  }, [pathName]);
 
   return (
     <div className="container mx-auto px-5 py-10">
