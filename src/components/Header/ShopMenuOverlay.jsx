@@ -46,7 +46,7 @@ const ShopMenuOverlay = () => {
 
   return (
     <div>
-      <div className="fixed top-6 left-6">
+      <div className="lg:hidden fixed top-6 left-6">
         <div
           onClick={() => switchOverlayComponentHandler("mobileNav")}
           className="inline-block"

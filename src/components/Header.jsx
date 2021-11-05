@@ -1,11 +1,12 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { cartActions } from "../store/cart-slice";
 import { uiActions } from "../store/ui-slice";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebase";
 import { ReactComponent as BagIcon } from "../images/bag.svg";
+import { ReactComponent as ArrowUp } from "../images/menu-arrow-up.svg";
+import { ReactComponent as ArrowDown } from "../images/menu-arrow-down.svg";
 import HeaderLogo from "./Header/HeaderLogo";
 import {
   pathToHome,
@@ -14,23 +15,19 @@ import {
   pathToAccount,
 } from "../router";
 import clxs from "../utils/clxs";
-import style from "./Header.module.css";
-
-// TODO: Shop link, More link, Search toggle
 
 const Header = () => {
   const { pathname } = useLocation();
+  const history = useHistory();
   const dispatch = useDispatch();
+
   const currentUser = useSelector((state) => state.user.currentUser);
   const numberOfCartItems = useSelector((state) => state.cart.totalQuantity);
   const isOverlayShown = useSelector((state) => state.ui.isOverlayShown);
+  const overlayComponent = useSelector((state) => state.ui.overlayComponent);
 
-  const cartToggleHandler = () => {
-    dispatch(cartActions.toggle());
-  };
-
-  const showMobileNavHandler = () => {
-    dispatch(uiActions.showOverlay("mobileNav"));
+  const showOverlayHandler = (name) => {
+    dispatch(uiActions.showOverlay(name));
   };
 
   const showCartHandler = () => {
@@ -41,14 +38,21 @@ const Header = () => {
     }
   };
 
+  const redirectPageHandler = (path) => {
+    if (pathname !== path) history.push(path);
+    dispatch(uiActions.closeOverlay());
+  };
+
   const isAtOverlayOrCheckout = pathname === pathToCheckout || isOverlayShown;
+  const checkoutPageBgColor = isAtOverlayOrCheckout
+    ? "bg-gray-50"
+    : "bg-lightOrange-50";
+  const borderColor = isOverlayShown ? "border-lightOrange-800" : "border-dark";
 
   return (
     <>
       {pathname !== pathToCheckout ? (
-        <div
-          className={isAtOverlayOrCheckout ? "bg-gray-50" : "bg-lightOrange-50"}
-        >
+        <div className={checkoutPageBgColor}>
           <header
             className={clxs(
               "container mx-auto py-20 px-5",
@@ -58,7 +62,7 @@ const Header = () => {
             <nav className="w-full flex justify-between items-center">
               <div className="left-nav w-full">
                 <div
-                  onClick={showMobileNavHandler}
+                  onClick={() => showOverlayHandler("mobileNav")}
                   className={clxs(
                     "hamburger-icon",
                     "mb-0.5 lg:hidden w-8 h-7 p-1 cursor-pointer",
@@ -66,50 +70,65 @@ const Header = () => {
                   )}
                 >
                   <span
-                    className={clxs(
-                      "w-full h-1 block border-b ",
-                      isOverlayShown
-                        ? " border-lightOrange-800"
-                        : "border-dark",
-                    )}
+                    className={clxs("w-full h-1 block border-b ", borderColor)}
                   ></span>
                   <span
-                    className={clxs(
-                      "w-full h-1 block border-b ",
-                      isOverlayShown
-                        ? " border-lightOrange-800"
-                        : "border-dark",
-                    )}
+                    className={clxs("w-full h-1 block border-b ", borderColor)}
                   ></span>
                   <span
-                    className={clxs(
-                      "w-full h-1 block border-b ",
-                      isOverlayShown
-                        ? " border-lightOrange-800"
-                        : "border-dark",
-                    )}
+                    className={clxs("w-full h-1 block border-b ", borderColor)}
                   ></span>
                 </div>
                 <div className="hidden lg:block w-full">
-                  <ul className="flex space-x-8">
+                  <ul className="flex space-x-8 tracking-wide">
                     <li>
-                      <Link
-                        to={pathToHome}
-                        className={style.header__link_item}
-                        href="#"
+                      <span
+                        onClick={() => redirectPageHandler(pathToHome)}
+                        className={clxs(
+                          "relative pb-1.5 hover:border-b cursor-pointer flex",
+                          borderColor,
+                        )}
                       >
                         MAIN
-                      </Link>
+                      </span>
                     </li>
                     <li>
-                      <Link to="/" className={style.header__link_item}>
-                        SHOP
-                      </Link>
+                      <span
+                        onClick={() => showOverlayHandler("shopMenu")}
+                        className={clxs(
+                          "w-14 relative pb-1.5 hover:border-b cursor-pointer flex",
+                          borderColor,
+                          overlayComponent === "shopMenu"
+                            ? clxs("border-b", borderColor)
+                            : "",
+                        )}
+                      >
+                        SHOP{" "}
+                        {overlayComponent === "shopMenu" ? (
+                          <ArrowDown className="h-3 w-3 absolute right-0 top-1.5" />
+                        ) : (
+                          <ArrowUp className="h-3 w-3 absolute right-0 top-1.5" />
+                        )}
+                      </span>
                     </li>
                     <li>
-                      <Link to="/" className={style.header__link_item}>
-                        More
-                      </Link>
+                      <span
+                        onClick={() => showOverlayHandler("info")}
+                        className={clxs(
+                          "w-14 relative pb-1.5 hover:border-b cursor-pointer flex",
+                          borderColor,
+                          overlayComponent === "info"
+                            ? clxs("border-b", borderColor)
+                            : "",
+                        )}
+                      >
+                        INFO{" "}
+                        {overlayComponent === "info" ? (
+                          <ArrowDown className="h-3 w-3 absolute right-1.5 top-1.5" />
+                        ) : (
+                          <ArrowUp className="h-3 w-3 absolute right-1.5 top-1.5" />
+                        )}
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -134,7 +153,10 @@ const Header = () => {
                           <li>
                             <span
                               onClick={() => auth.signOut()}
-                              className={style.header__link_item}
+                              className={clxs(
+                                "pb-2 hover:border-b cursor-pointer",
+                                borderColor,
+                              )}
                             >
                               Log Out
                             </span>
@@ -142,7 +164,10 @@ const Header = () => {
                           <li>
                             <Link
                               to={pathToAccount}
-                              className={style.header__link_item}
+                              className={clxs(
+                                "pb-2 hover:border-b cursor-pointer",
+                                borderColor,
+                              )}
                             >
                               Account
                             </Link>
@@ -150,19 +175,28 @@ const Header = () => {
                         </>
                       ) : (
                         <li>
-                          <Link
-                            to={pathToLogin}
-                            className={style.header__link_item}
+                          <span
+                            onClick={() => redirectPageHandler(pathToLogin)}
+                            className={clxs(
+                              "pb-2 hover:border-b cursor-pointer",
+                              borderColor,
+                            )}
                           >
                             Log In
-                          </Link>
+                          </span>
                         </li>
                       )}
 
                       <li>
-                        <Link className={style.header__link_item} to="/">
+                        <span
+                          onClick={() => showOverlayHandler("search")}
+                          className={clxs(
+                            "pb-2 hover:border-b cursor-pointer",
+                            borderColor,
+                          )}
+                        >
                           Search
-                        </Link>
+                        </span>
                       </li>
                     </ul>
                   </div>

@@ -1,17 +1,23 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase";
 import { uiActions } from "../../store/ui-slice";
-import { pathToAccount, pathToLogin, pathToSignup } from "../../router";
+import {
+  pathToAccount,
+  pathToHome,
+  pathToLogin,
+  pathToSignup,
+} from "../../router";
 
 const MobileNavOverlay = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { pathname } = useLocation();
   const currentUser = useSelector((state) => state.user.currentUser);
 
   const redirectPageHandler = (path) => {
-    history.push(path);
+    if (pathname !== path) history.push(path);
     dispatch(uiActions.closeOverlay());
   };
 
@@ -65,7 +71,9 @@ const MobileNavOverlay = () => {
   return (
     <div>
       <ul className="text-3xl tracking-wider uppercase space-y-8">
-        <li className="cursor-pointer">Main</li>
+        <li className="cursor-pointer">
+          <span onClick={() => redirectPageHandler(pathToHome)}>Main</span>
+        </li>
         <li className="cursor-pointer">
           <span onClick={() => switchOverlayComponentHandler("shopMenu")}>
             Shop
