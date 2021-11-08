@@ -1,6 +1,6 @@
 <div style="display:block;text-align:center">
-  <img src="https://github.com/williamafil/collllection-shop/blob/main/src/images/logo.png?raw=true" />
-  <p>Collllect is an e-commerce website built with React and Firebase.</p>
+  <img align="center" src="https://github.com/williamafil/collllection-shop/blob/main/src/images/logo.png?raw=true" />
+  <p align"center">Collllect is an e-commerce website built with React and Firebase.</p>
 </div>
 
 ## Technologies
