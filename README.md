@@ -1,5 +1,6 @@
 <p align="center">
-  <img src="https://github.com/williamafil/collllection-shop/blob/main/src/images/logo.png?raw=true" width="150">
+  <img src="https://github.com/williamafil/collllection-shop/blob/main/src/images/logo.png?raw=true" width="200">
+  <br />
   Collllect is an e-commerce website built with React and Firebase.
 </p>
 
