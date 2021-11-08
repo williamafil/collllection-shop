@@ -4,12 +4,16 @@ import { pathToHome } from "../../router";
 
 const HeaderLogo = () => {
   return (
-    <Link to={pathToHome} className="h-full w-full">
-      <div className="w-full text-center">
-        <h1 className="uppercase text-3xl md:text-4xl lg:text-5xl leading-5">
-          collllect
+    <Link to={pathToHome}>
+      <div className="relative">
+        <h1 className="flex justify-center items-center uppercase text-3xl md:text-4xl lg:text-5xl leading-5">
+          <span className="text-4xl md:text-5xl lg:text-6xl">c</span>
+          ollllec
+          <span className="text-4xl md:text-5xl lg:text-6xl">t</span>
         </h1>
-        <h2 className="w-full text-2xs md:text-xs lg:text-sm">Mine & Yours</h2>
+        <h2 className="absolute -bottom-2 w-full text-2xs md:text-xs lg:text-sm text-center">
+          Mine & Yours
+        </h2>
       </div>
     </Link>
   );
