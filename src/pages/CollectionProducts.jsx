@@ -1,16 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import gsap from "gsap";
 import { Link } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import clxs from "../utils/clxs";
+import CollectionLoadingSkeleton from "../components/Collection/CollectionLoadingSkeleton";
 
 const tl = gsap.timeline();
 
 const CollectionProducts = (props) => {
   const pathName = props.match.params.pathName;
+  const categories = useSelector((state) => state.category.categories);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const imageRefs = useRef([]);
+  const [category, setCategory] = useState({});
+  console.log("pathName", pathName);
 
   useEffect(async () => {
     setIsLoading(true);
@@ -18,53 +24,69 @@ const CollectionProducts = (props) => {
     const q = query(productsRef, where("categoryId", "==", pathName));
     const querySnapshot = await getDocs(q);
     const productsData = querySnapshot.docs.map((product) => {
-      // const coverImage = new Image();
-      // coverImage.src = product.data().images[0];
-      // const promise = new Promise((resolve, reject) => {
-      //   console.log("data.image: ", product.data().images[0]);
-      //   coverImage.onload = resolve();
-      //   coverImage.onerror = reject();
-      // });
-
       return {
         id: product.id,
         ...product.data(),
-        // cover: coverImage,
       };
     });
     setProducts(productsData);
     setIsLoading(false);
+
+    const currentCategory = categories.find(
+      (category) => category.id === pathName,
+    );
+    setCategory(currentCategory);
   }, [pathName]);
 
   useEffect(() => {
     if (!isLoading) {
-      tl.from(imageRefs.current, 1, {
+      tl.from(imageRefs.current, 0.5, {
         autoAlpha: 0,
         y: 50,
-        delay: 0.7,
-        stagger: 0.7,
+        delay: 0.3,
+        stagger: 0.5,
       });
     }
   }, [isLoading]);
 
   const productsList = () => {
     return (
-      <div className="min-h-1/2">
-        <div className="max-w-7xl mx-auto sm:masonry-col-2 md:masonry-col-3 lg:masonry-col-4 before:box-inherit after:box-inherit">
+      <div className="min-h-screen w-full h-1">
+        <div
+          className={clxs(
+            "h-full w-full",
+            "sm:masonry-col-2 md:masonry-col-3 lg:masonry-col-4",
+            // products.length <= 2 ? "" : "lg:masonry-col-4",
+            "before:box-inherit after:box-inherit",
+          )}
+        >
           {products.map((product, index) => (
             <div
               ref={(element) => (imageRefs.current[index] = element)}
               key={product.id}
-              className="mb-8 break-inside"
+              className="pb-2 break-inside"
             >
-              <Link to={`/products/${product.slug}`}>
-                <img className="" src={product.images[0]} alt={product.title} />
+              <Link to={`/products/${product.slug}`} className="">
+                <div className="relative mb-1 pb-16">
+                  <img
+                    className=""
+                    src={product.images[0]}
+                    alt={product.title}
+                  />
+                  <div className="absolute left-0">
+                    <h3 className="py-2 font-bold leading-4 tracking-wide text-gray-700">
+                      {product.title}
+                    </h3>
+                    <h3 className="py-1 leading-3">${product.price}</h3>
+                  </div>
+                </div>
+                {/* <img className="" src={product.images[0]} alt={product.title} />
                 <div className="">
-                  <h3 className="font-bold leading-loose tracking-wide text-gray-700">
+                  <h3 className="py-2 font-bold leading-4 tracking-wide text-gray-700">
                     {product.title}
                   </h3>
-                  <h3 className="leading-3">${product.price}</h3>
-                </div>
+                  <h3 className="py-2 leading-3">${product.price}</h3>
+                </div> */}
               </Link>
             </div>
           ))}
@@ -74,9 +96,22 @@ const CollectionProducts = (props) => {
   };
 
   return (
-    <div className="container mx-auto px-5 py-10">
-      <h1>{pathName}</h1>
-      {isLoading ? <>is loading</> : <>{productsList()}</>}
+    <div className="min-h-screen container mx-auto px-5 lg:py-10">
+      <div className="mb-12 lg:mb-20 flex flex-col lg:flex-row">
+        <div className="lg:w-1/2">
+          <h1 className="text-3xl tracking-wide">
+            {category?.title || pathName}
+          </h1>
+          <p className="my-2 tracking-wider">{category?.description}</p>
+        </div>
+        <div className="lg:w-1/2 self-end text-right">
+          <span className="hidden lg:inline-block pr-3">Sort by</span>
+          <select className="mt-6 w-40 py-3 px-2 bg-transparent border border-black">
+            <option value="">Featured</option>
+          </select>
+        </div>
+      </div>
+      {isLoading ? <CollectionLoadingSkeleton /> : <>{productsList()}</>}
     </div>
   );
 };

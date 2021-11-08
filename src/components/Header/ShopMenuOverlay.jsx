@@ -63,8 +63,8 @@ const ShopMenuOverlay = () => {
       </div>
 
       <ul className="text-3xl leading-7 tracking-wider uppercase space-y-8">
-        {categories.map((category, index) => (
-          <li key={index}>
+        {categories.map((category) => (
+          <li key={category.id}>
             <span
               onClick={() => redirectPageHandler(category.id)}
               className="cursor-pointer hover:text-black"
