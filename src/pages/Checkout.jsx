@@ -406,6 +406,7 @@ const Checkout = () => {
                   className="w-full p-3 rounded-md border border-gray-200 drop-shadow-sm"
                   onChange={selectProvinceHandler}
                   value={province}
+                  placeholder="Select..."
                 >
                   <option className="text-gray-600" value="" disabled></option>
 
