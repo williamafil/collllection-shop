@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cart-slice";
 import { uiActions } from "../../store/ui-slice";
 import clxs from "../../utils/clxs";
-import Header from "../Header";
+import Header from "../Header/Header";
 
 const OverlayWrapper = ({ children }) => {
   const dispatch = useDispatch();

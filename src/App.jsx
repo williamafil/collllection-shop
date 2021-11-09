@@ -11,9 +11,9 @@ import Routes from "./router";
 
 import Cart from "./components/Cart/Cart";
 
-import Alert from "./components/Alert";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Alert from "./components/Notification/Alert";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
 import Overlay from "./components/UI/Overlay";
 
 function App() {

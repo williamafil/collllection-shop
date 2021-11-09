@@ -1,12 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { ReactComponent as FacebookIcon } from "../images/facebook.svg";
-import { ReactComponent as InstagramIcon } from "../images/instagram.svg";
-import { ReactComponent as PinterestIcon } from "../images/pinterest.svg";
-import { ReactComponent as HeartIcon } from "../images/heart.svg";
-
+import SubscribeForm from "../Subscription/SubscribeForm";
+import { ReactComponent as FacebookIcon } from "../../images/facebook.svg";
+import { ReactComponent as InstagramIcon } from "../../images/instagram.svg";
+import { ReactComponent as PinterestIcon } from "../../images/pinterest.svg";
+import { ReactComponent as HeartIcon } from "../../images/heart.svg";
 import style from "./Footer.module.css";
-import SubscribeForm from "./Subscription/SubscribeForm";
 
 const Footer = () => {
   const { pathname } = useLocation();

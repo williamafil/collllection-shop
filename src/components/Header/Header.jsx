@@ -1,20 +1,20 @@
 import React from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { uiActions } from "../store/ui-slice";
+import { uiActions } from "../../store/ui-slice";
 import { Link } from "react-router-dom";
-import { auth } from "../firebase/firebase";
-import { ReactComponent as BagIcon } from "../images/bag.svg";
-import { ReactComponent as ArrowUp } from "../images/menu-arrow-up.svg";
-import { ReactComponent as ArrowDown } from "../images/menu-arrow-down.svg";
-import HeaderLogo from "./Header/HeaderLogo";
+import { auth } from "../../firebase/firebase";
+import { ReactComponent as BagIcon } from "../../images/bag.svg";
+import { ReactComponent as ArrowUp } from "../../images/menu-arrow-up.svg";
+import { ReactComponent as ArrowDown } from "../../images/menu-arrow-down.svg";
+import HeaderLogo from "./HeaderLogo";
 import {
   pathToHome,
   pathToCheckout,
   pathToLogin,
   pathToAccount,
-} from "../router";
-import clxs from "../utils/clxs";
+} from "../../router";
+import clxs from "../../utils/clxs";
 
 const Header = () => {
   const { pathname } = useLocation();

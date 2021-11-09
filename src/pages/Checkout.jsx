@@ -106,7 +106,6 @@ const Checkout = () => {
 
     // 3. get order id
     // 4. redirect to /checkout/:order_id       /checkout/sEda7DE96aed2d3
-    console.log("submit");
     event.preventDefault();
     setErrorMsgs([]);
     let isError = false;
