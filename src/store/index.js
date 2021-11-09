@@ -17,6 +17,8 @@ import userReducer from "./user-slice";
 import cartReducer from "./cart-slice";
 import uiReducer from "./ui-slice";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const persistConfig = {
   key: "root",
   version: 1,
@@ -33,26 +35,50 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const getMiddlewares = (getDefaultMiddleware) => {
+  const defaultMiddlewares = getDefaultMiddleware({
+    serializableCheck: {
+      // Ignore these action types
+      ignoredActions: [
+        "user/setCurrentUser",
+        FLUSH,
+        REHYDRATE,
+        PAUSE,
+        PERSIST,
+        PURGE,
+        REGISTER,
+      ],
+      ignoredActionPaths: ["payload.createdAt"],
+      ignoredPaths: ["user.currentUser.createdAt"],
+    },
+  });
+  if (isProduction) {
+    return defaultMiddlewares;
+  }
+  return defaultMiddlewares.concat(logger);
+};
+
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these action types
-        ignoredActions: [
-          "user/setCurrentUser",
-          FLUSH,
-          REHYDRATE,
-          PAUSE,
-          PERSIST,
-          PURGE,
-          REGISTER,
-        ],
-        ignoredActionPaths: ["payload.createdAt"],
-        ignoredPaths: ["user.currentUser.createdAt"],
-      },
-    }).concat(logger),
-  devTools: process.env.NODE_ENV !== "production",
+  middleware: getMiddlewares,
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: {
+  //       // Ignore these action types
+  //       ignoredActions: [
+  //         "user/setCurrentUser",
+  //         FLUSH,
+  //         REHYDRATE,
+  //         PAUSE,
+  //         PERSIST,
+  //         PURGE,
+  //         REGISTER,
+  //       ],
+  //       ignoredActionPaths: ["payload.createdAt"],
+  //       ignoredPaths: ["user.currentUser.createdAt"],
+  //     },
+  //   }).concat(logger),
+  devTools: !isProduction,
 });
 
 export const persistor = persistStore(store);
