@@ -33,6 +33,10 @@
 - ESLint
 - Prettier
 
+### Flowchart
+
+![](https://github.com/williamafil/collllection-shop/blob/main/src/images/collllect_flowchart.png?raw=true)
+
 ### Features
 
 - [x] Sign up and sign in with email or Google account
