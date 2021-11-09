@@ -6,6 +6,7 @@ import { ReactComponent as PinterestIcon } from "../images/pinterest.svg";
 import { ReactComponent as HeartIcon } from "../images/heart.svg";
 
 import style from "./Footer.module.css";
+import SubscribeForm from "./Subscription/SubscribeForm";
 
 const Footer = () => {
   const { pathname } = useLocation();
@@ -35,17 +36,7 @@ const Footer = () => {
                 <p className="pb-4 text-sm leading-7 tracking-wide">
                   Receive special offers and first look at new products.
                 </p>
-                <form className=" w-full flex">
-                  <input
-                    className=" w-full py-2.5 px-5 bg-transparent border border-black tracking-wide"
-                    placeholder="Enter email"
-                  />
-                  <span className="pl-4">
-                    <button className="h-full inline-block w-28 bg-black text-white hover:bg-lightOrange-800 hover:text-black">
-                      Subscribe
-                    </button>
-                  </span>
-                </form>
+                <SubscribeForm />
               </div>
 
               <div className="mb-14 lg:pl-14 lg:w-4/12">

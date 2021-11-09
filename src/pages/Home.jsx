@@ -2,7 +2,7 @@ import React from "react";
 import Hero from "../components/Hero";
 import CategoryItems from "../components/CategoryItems";
 import SendCard from "../components/SendCard";
-import Subscription from "../components/Subscription";
+import Subscription from "../components/Subscription/Subscription";
 import CategoryList from "../components/Category/CategoryList";
 
 const Home = () => {
