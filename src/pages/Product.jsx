@@ -62,6 +62,7 @@ const Product = () => {
         quantity,
       }),
     );
+    console.log("checkout:", checkout);
 
     checkout && history.push(pathToCheckout);
   };
@@ -103,7 +104,7 @@ const Product = () => {
 
             <div className="buttons flex flex-col space-y-6">
               <button
-                onClick={addProductToCartHandler}
+                onClick={() => addProductToCartHandler()}
                 className="h-14 w-full border border-black"
               >
                 Add to Cart
