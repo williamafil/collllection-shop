@@ -56,7 +56,6 @@ const CollectionProducts = (props) => {
           className={clxs(
             "h-full w-full",
             "sm:masonry-col-2 md:masonry-col-3 lg:masonry-col-4",
-            // products.length <= 2 ? "" : "lg:masonry-col-4",
             "before:box-inherit after:box-inherit",
           )}
         >
@@ -80,13 +79,6 @@ const CollectionProducts = (props) => {
                     <h3 className="py-1 leading-3">${product.price}</h3>
                   </div>
                 </div>
-                {/* <img className="" src={product.images[0]} alt={product.title} />
-                <div className="">
-                  <h3 className="py-2 font-bold leading-4 tracking-wide text-gray-700">
-                    {product.title}
-                  </h3>
-                  <h3 className="py-2 leading-3">${product.price}</h3>
-                </div> */}
               </Link>
             </div>
           ))}
@@ -97,16 +89,22 @@ const CollectionProducts = (props) => {
 
   return (
     <div className="container mx-auto px-5 pb-20 lg:py-10">
-      <div className="mb-10 lg:mb-20 flex flex-col lg:flex-row">
+      <div
+        className={clxs(
+          "mb-10 lg:mb-16",
+          "flex flex-col",
+          "md:flex-row md:items-center md:justify-between",
+        )}
+      >
         <div className="lg:w-1/2">
-          <h1 className="text-3xl tracking-wide">
+          <h1 className="text-3xl tracking-wide capitalize">
             {category?.title || pathName}
           </h1>
           <p className="my-2 tracking-wider">{category?.description}</p>
         </div>
-        <div className="lg:w-1/2 self-end text-right">
+        <div className="lg:w-1/2 self-start lg:text-right">
           <span className="hidden lg:inline-block pr-3">Sort by</span>
-          <select className="mt-6 w-40 py-3 px-2 bg-transparent border border-black">
+          <select className="w-40 py-3 px-2 bg-transparent border border-black">
             <option value="">Featured</option>
           </select>
         </div>

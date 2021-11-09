@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { categoryActions } from "../../store/category-slice";
 import { uiActions } from "../../store/ui-slice";
 import { ReactComponent as ArrowDownLeft } from "../../images/arrow-down-left.svg";
 import { pathToHome } from "../../router";
