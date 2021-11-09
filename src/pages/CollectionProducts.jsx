@@ -16,7 +16,6 @@ const CollectionProducts = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const imageRefs = useRef([]);
   const [category, setCategory] = useState({});
-  console.log("pathName", pathName);
 
   useEffect(async () => {
     setIsLoading(true);

@@ -62,7 +62,6 @@ const Product = () => {
         quantity,
       }),
     );
-    console.log("checkout:", checkout);
 
     checkout && history.push(pathToCheckout);
   };
