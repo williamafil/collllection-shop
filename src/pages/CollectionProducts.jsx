@@ -51,7 +51,7 @@ const CollectionProducts = (props) => {
 
   const productsList = () => {
     return (
-      <div className="min-h-screen w-full h-1">
+      <div className="min-h-screen sm:min-h-screen/2 w-full">
         <div
           className={clxs(
             "h-full w-full",
@@ -96,8 +96,8 @@ const CollectionProducts = (props) => {
   };
 
   return (
-    <div className="min-h-screen container mx-auto px-5 lg:py-10">
-      <div className="mb-12 lg:mb-20 flex flex-col lg:flex-row">
+    <div className="container mx-auto px-5 pb-20 lg:py-10">
+      <div className="mb-10 lg:mb-20 flex flex-col lg:flex-row">
         <div className="lg:w-1/2">
           <h1 className="text-3xl tracking-wide">
             {category?.title || pathName}
