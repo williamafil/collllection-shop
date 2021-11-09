@@ -52,6 +52,7 @@ const store = configureStore({
       },
     }).concat(logger),
   reducer: persistedReducer,
+  devTools: false,
 });
 
 export const persistor = persistStore(store);
