@@ -34,6 +34,7 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -51,8 +52,7 @@ const store = configureStore({
         ignoredPaths: ["user.currentUser.createdAt"],
       },
     }).concat(logger),
-  reducer: persistedReducer,
-  devTools: false,
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export const persistor = persistStore(store);
