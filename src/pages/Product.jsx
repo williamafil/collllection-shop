@@ -52,7 +52,7 @@ const Product = () => {
     });
   };
 
-  const addProductToCartHandler = () => {
+  const addProductToCartHandler = (checkout = false) => {
     dispatch(
       cartActions.addProduct({
         id: product.id,
@@ -62,6 +62,8 @@ const Product = () => {
         quantity,
       }),
     );
+
+    checkout && history.push(pathToCheckout);
   };
 
   return (
@@ -108,7 +110,7 @@ const Product = () => {
               </button>
 
               <button
-                onClick={() => history.push(pathToCheckout)}
+                onClick={() => addProductToCartHandler(true)}
                 className="h-14 w-full bg-lightOrange-800"
               >
                 Buy it Now
