@@ -42,9 +42,9 @@ Collllect is a Shopify inspired e-commerce app. The application uses React and T
 - [x] Sign up and sign in with email or Google account
 - [x] Add product to cart
 - [x] Change product quantity in cart
-- [ ] Click on buy now button to checkout the product
+- [x] Click on buy now button to checkout the product
+- [x] Product search
 - [ ] Product filter
-- [ ] Product search
 - [ ] Integrate online payment
 - [ ] Admin dashboard
 - [ ] Use lazy data loading on products page to improve site performance
