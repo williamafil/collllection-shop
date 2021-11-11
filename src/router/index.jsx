@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import Search from "../pages/Search";
 import Account from "../pages/protected/Account";
 import Product from "../pages/Product";
 import Checkout from "../pages/Checkout";
@@ -15,6 +16,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 export const pathToHome = "/";
 export const pathToLogin = "/login";
+export const pathToSearch = "/search";
 export const pathToSignup = "/signup";
 export const pathToCheckout = "/checkout";
 export const pathToAccount = "/account";
@@ -33,6 +35,8 @@ const Routes = () => {
       <Route path={pathToLogin} component={Login} />
       <Route path={pathToSignup} component={Signup} />
       <Route path={pathToCheckout} component={Checkout} />
+      <Route path={pathToSearch} component={Search} />
+
       <Route path="/payment/:orderId" component={Payment} />
       <Route path="/notfound" component={PageNotFound} />
       <Route path="/collections/:pathName" component={CollectionProducts} />

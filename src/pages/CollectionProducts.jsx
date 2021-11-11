@@ -7,8 +7,6 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import clxs from "../utils/clxs";
 import CollectionLoadingSkeleton from "../components/Collection/CollectionLoadingSkeleton";
 
-const tl = gsap.timeline();
-
 const CollectionProducts = (props) => {
   const pathName = props.match.params.pathName;
   const categories = useSelector((state) => state.category.categories);
@@ -39,6 +37,7 @@ const CollectionProducts = (props) => {
 
   useEffect(() => {
     if (!isLoading) {
+      const tl = gsap.timeline();
       tl.from(imageRefs.current, 0.5, {
         autoAlpha: 0,
         y: 50,

@@ -9,6 +9,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "@tailwindcss/aspect-ratio": "^0.3.0",
+    "algoliasearch": "^4.11.0",
     "firebase": "^9.1.2",
     "gsap": "^3.8.0",
     "react": "^17.0.0",

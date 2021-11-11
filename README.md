@@ -1,8 +1,8 @@
 <p align="center">
   <img src="https://github.com/williamafil/collllection-shop/blob/main/src/images/logo.png?raw=true" width="200">
-  <br />
-  Collllect is an e-commerce website built with React and Firebase.
 </p>
+Collllect is a Shopify inspired e-commerce app. The application uses React and Tailwind CSS in the front-end and Firebase as the back-end server. 
+<hr />
 
 ## Technologies
 
