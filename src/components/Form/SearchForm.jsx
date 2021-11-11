@@ -30,7 +30,7 @@ const SearchForm = ({
           onInput={onInput}
           value={searchKeyword}
           className={clxs(
-            "w-full sm:py-2 border-b bg-transparent focus:outline-none text-2xl tracking-wide ",
+            "w-full sm:py-2 border-b bg-transparent focus:outline-none tracking-wide ",
             className,
           )}
           placeholder="Search"

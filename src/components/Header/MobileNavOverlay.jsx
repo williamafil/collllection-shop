@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase";
@@ -9,12 +9,14 @@ import {
   pathToLogin,
   pathToSignup,
 } from "../../router";
+import SearchForm from "../Form/SearchForm";
 
 const MobileNavOverlay = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = useLocation();
   const currentUser = useSelector((state) => state.user.currentUser);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const redirectPageHandler = (path) => {
     if (pathname !== path) history.push(path);
@@ -23,6 +25,18 @@ const MobileNavOverlay = () => {
 
   const switchOverlayComponentHandler = (componentName) => {
     dispatch(uiActions.switchOverlayComponent(componentName));
+  };
+
+  const onInputHandler = (event) => {
+    setSearchKeyword(event.target.value);
+  };
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    if (searchKeyword.trim() === "") return;
+
+    history.push(`/search?q=${searchKeyword}`);
+    dispatch(uiActions.closeOverlay());
   };
 
   const notLoggedIn = () => (
@@ -69,7 +83,7 @@ const MobileNavOverlay = () => {
   );
 
   return (
-    <div>
+    <div className="lg:hidden">
       <ul className="text-3xl tracking-wider uppercase space-y-8">
         <li className="cursor-pointer">
           <span onClick={() => redirectPageHandler(pathToHome)}>Main</span>
@@ -85,7 +99,14 @@ const MobileNavOverlay = () => {
           </span>
         </li>
       </ul>
-      {!currentUser ? notLoggedIn() : userIsLoggedIn()}
+      <div>{!currentUser ? notLoggedIn() : userIsLoggedIn()}</div>
+      <div className="mt-10 max-w-md">
+        <SearchForm
+          onSubmit={onSubmitHandler}
+          onInput={onInputHandler}
+          className="border-lightOrange-800 w-full placeholder-lightOrange-800"
+        />
+      </div>
     </div>
   );
 };
