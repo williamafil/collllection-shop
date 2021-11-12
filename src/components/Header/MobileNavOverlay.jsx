@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { auth } from "../../firebase/firebase";
 import { uiActions } from "../../store/ui-slice";
-import {
-  pathToAccount,
-  pathToHome,
-  pathToLogin,
-  pathToSignup,
-} from "../../router";
+import { pathToHome } from "../../router";
 import SearchForm from "../Form/SearchForm";
+import IsLoggedInAs from "../Account/IsLoggedInAs";
+import NotLoggedIn from "../Account/NotLoggedIn";
 
 const MobileNavOverlay = () => {
   const dispatch = useDispatch();
@@ -39,49 +35,6 @@ const MobileNavOverlay = () => {
     dispatch(uiActions.closeOverlay());
   };
 
-  const notLoggedIn = () => (
-    <ul className="mt-28 space-y-4 tracking-wide">
-      <li>
-        <span
-          onClick={() => redirectPageHandler(pathToLogin)}
-          className="py-1 pr-2 cursor-pointer"
-        >
-          Log in
-        </span>
-      </li>
-      <li
-        onClick={() => redirectPageHandler(pathToSignup)}
-        className="py-1 pr-2 cursor-pointer"
-      >
-        Create account
-      </li>
-    </ul>
-  );
-
-  const userIsLoggedIn = () => (
-    <ul className="mt-28 space-y-4 tracking-wide">
-      {currentUser.firstName !== "" && (
-        <li>
-          <span
-            onClick={() => redirectPageHandler(pathToAccount)}
-            className="py-1 pr-2 cursor-pointer"
-          >
-            Logged in as {currentUser.firstName}
-          </span>
-        </li>
-      )}
-
-      <li>
-        <span
-          onClick={() => auth.signOut()}
-          className="py-1 pr-2 cursor-pointer"
-        >
-          Log out
-        </span>
-      </li>
-    </ul>
-  );
-
   return (
     <div className="lg:hidden">
       <ul className="text-3xl tracking-wider uppercase space-y-8">
@@ -99,7 +52,13 @@ const MobileNavOverlay = () => {
           </span>
         </li>
       </ul>
-      <div>{!currentUser ? notLoggedIn() : userIsLoggedIn()}</div>
+      <div>
+        {!currentUser ? (
+          <NotLoggedIn />
+        ) : (
+          <IsLoggedInAs currentUser={currentUser} />
+        )}
+      </div>
       <div className="mt-10 max-w-md">
         <SearchForm
           onSubmit={onSubmitHandler}

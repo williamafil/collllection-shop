@@ -88,7 +88,7 @@ const OrderHistory = () => {
             )}
           </div>
           <div className="w-1/12 ">
-            <div class="relative">
+            <div className="relative">
               {!order.isPaid && (
                 <CreditCardIcon
                   onClick={() => history.push(`/payment/${order.id}`)}
