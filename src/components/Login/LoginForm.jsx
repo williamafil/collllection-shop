@@ -84,13 +84,20 @@ const LoginForm = ({ onResetPasswordHandler }) => {
             Sign In with Google
           </FormButton>
         </fieldset>
-        <div className="mt-10 flex space-x-5 text-sm tracking-wide">
-          <Link to={pathToSignup} className="hover:text-lightOrange-800">
-            Create account
-          </Link>
-          <button type="button" onClick={onResetPasswordHandler}>
-            Forgot your password?
-          </button>
+        <div className="mt-10 flex justify-between text-sm tracking-wide">
+          <section className="flex space-x-5">
+            <Link to={pathToSignup} className="hover:text-lightOrange-800">
+              Create account
+            </Link>
+            <button type="button" onClick={onResetPasswordHandler}>
+              Forgot your password?
+            </button>
+          </section>
+          <section>
+            <p>
+              <span>account:a@a.com</span> / <span>password:123456</span>
+            </p>
+          </section>
         </div>
       </form>
     </>
