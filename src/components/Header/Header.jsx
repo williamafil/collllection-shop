@@ -11,6 +11,7 @@ import HeaderLogo from "./HeaderLogo";
 import {
   pathToHome,
   pathToCheckout,
+  pathToPayment,
   pathToLogin,
   pathToAccount,
 } from "../../router";
@@ -20,7 +21,6 @@ const Header = () => {
   const { pathname } = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-
   const currentUser = useSelector((state) => state.user.currentUser);
   const numberOfCartItems = useSelector((state) => state.cart.totalQuantity);
   const isOverlayShown = useSelector((state) => state.ui.isOverlayShown);
@@ -43,7 +43,10 @@ const Header = () => {
     dispatch(uiActions.closeOverlay());
   };
 
-  const isAtOverlayOrCheckout = pathname === pathToCheckout || isOverlayShown;
+  const isAtOverlayOrCheckout =
+    pathname === pathToCheckout ||
+    pathname.includes(pathToPayment) ||
+    isOverlayShown;
   const checkoutPageBgColor = isAtOverlayOrCheckout
     ? "bg-gray-50"
     : "bg-lightOrange-50";
@@ -51,7 +54,7 @@ const Header = () => {
 
   return (
     <>
-      {pathname !== pathToCheckout ? (
+      {!isAtOverlayOrCheckout ? (
         <div className={checkoutPageBgColor}>
           <header
             className={clxs(

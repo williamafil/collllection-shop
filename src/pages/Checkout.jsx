@@ -151,6 +151,7 @@ const Checkout = () => {
 
     try {
       const docData = {
+        email,
         shipping: {
           userId: userId,
           firstName,

@@ -1,7 +1,11 @@
-import React from "react";
+import StripeWrapper from "../components/Payment/StripeWrapper";
 
 const Payment = (props) => {
-  return <div>payment</div>;
+  return (
+    <div className="h-screen bg-gray-50">
+      <StripeWrapper />
+    </div>
+  );
 };
 
 export default Payment;

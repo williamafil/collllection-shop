@@ -8,8 +8,11 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
+    "@stripe/react-stripe-js": "^1.6.0",
+    "@stripe/stripe-js": "^1.21.1",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "algoliasearch": "^4.11.0",
+    "axios": "^0.24.0",
     "firebase": "^9.1.2",
     "gsap": "^3.8.0",
     "react": "^17.0.0",

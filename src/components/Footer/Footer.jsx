@@ -5,14 +5,18 @@ import { ReactComponent as FacebookIcon } from "../../images/facebook.svg";
 import { ReactComponent as InstagramIcon } from "../../images/instagram.svg";
 import { ReactComponent as PinterestIcon } from "../../images/pinterest.svg";
 import { ReactComponent as HeartIcon } from "../../images/heart.svg";
+import { pathToCheckout, pathToPayment } from "../../router";
 import style from "./Footer.module.css";
 
 const Footer = () => {
   const { pathname } = useLocation();
 
+  const isAtPaymentOrCheckout =
+    pathname === pathToCheckout || pathname.includes(pathToPayment);
+
   return (
     <>
-      {pathname !== "/checkout" ? (
+      {!isAtPaymentOrCheckout ? (
         <footer className="px-5 pt-24 bg-white">
           <div className="container mx-auto">
             <div className="flex flex-col lg:flex-row">

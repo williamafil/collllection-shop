@@ -19,6 +19,7 @@ export const pathToLogin = "/login";
 export const pathToSearch = "/search";
 export const pathToSignup = "/signup";
 export const pathToCheckout = "/checkout";
+export const pathToPayment = "/payment";
 export const pathToAccount = "/account";
 
 const Routes = () => {
