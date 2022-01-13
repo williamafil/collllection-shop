@@ -35,7 +35,7 @@ Collllect is a Shopify inspired e-commerce app. The application uses React and T
 
 ### Flowchart
 
-![](https://github.com/williamafil/collllection-shop/blob/main/src/images/collllect_flowchart.png?raw=true)
+![](https://github.com/williamafil/Library/blob/e7b78059a27c8b8f8ad2ecb14d1f71fcb96f993e/temp/Screen%20Shot%202022-01-13%20at%2011.17.14%20AM.png?raw=true)
 
 ### Features
 
